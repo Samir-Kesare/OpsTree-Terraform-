@@ -1,4 +1,3 @@
-
 #---------------------------------Security Group ----------------------------------#
 
 security_name           = "Frontend-sg"
@@ -19,5 +18,20 @@ Sg_tags                 = {
     Enviroment    = "dev"
     Owner         = "Vishal"
   }   
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------------Launch Template ----------------------------------#
+
+#AMI
+AMI_name          = "Frontend-AMI"
+AMI_Instance_ID   = "i-01cbd03e43fabd05d"
+
+# Launch Template
+
+template_name           = "Frontend-template"
+template_description    = "Template for Frontend"
+instance_type           = "t2.micro" 
+instance_keypair        = "newkey"
+subnet_ID               = "subnet-04c0c823118f48202"
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
