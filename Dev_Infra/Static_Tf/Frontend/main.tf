@@ -1,4 +1,3 @@
-
 #---------------------------------Security Group ----------------------------------#
 
 locals {
@@ -31,3 +30,39 @@ resource "aws_security_group" "sq_grp" {
   tags                  = var.Sg_tags
 }
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------------Launch Template ----------------------------------#
+
+
+# First Create AMI for Template
+
+resource "aws_ami_from_instance" "AMI" {
+  name               = var.AMI_name
+  source_instance_id = var.AMI_Instance_ID
+}
+
+# Cretae Launch Template
+
+# Launch Template Resource
+resource "aws_launch_template" "Template" {
+  name = var.template_name
+  description = var.template_description
+  image_id = aws_ami_from_instance.AMI.id
+  instance_type = var.instance_type
+
+  vpc_security_group_ids = [aws_security_group.sq_grp.id]
+  key_name = var.instance_keypair
+  network_interfaces {
+    subnet_id = var.subnet_ID 
+  }
+  /*user_data = 
+                    #!/bin/bash
+                    cd /home/ubuntu/Frontend            # Uncomment When use Actual Instance
+                    npm start
+  */
+  tags = {
+    Name = var.template_name
+  }
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+
