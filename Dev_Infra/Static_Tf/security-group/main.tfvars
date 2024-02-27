@@ -1,13 +1,12 @@
 
-#---------------------------------Security Group ----------------------------------#
 
-security_name           = "Frontend-sg"
-Security_description    = "Security group for Frontend-API"
-vpc_id                  = "vpc-0383f4dc3af051efa"
+security_name           = "Salary-sg"
+Security_description    = "Security group for Salary-API"
+vpc_id                  = "vpc-0ebc6865d6c6a5460"
 
 inbound_ports           = [
     { port = 22, protocol = "tcp",cidr_blocks = "20.0.0.0/28" }, # Management VPC Cidr Block
-    { port = 3000, protocol = "tcp", cidr_blocks = "0.0.0.0/0" }, #  Frontend-lb-sg ID Repalce (0.0.0.0/0)
+    { port = 8080, protocol = "tcp", cidr_blocks = "0.0.0.0/0" }, #  Salary-lb-sg ID Repalce (0.0.0.0/0)
   ]
 
 outbound_ports          = [
@@ -15,9 +14,9 @@ outbound_ports          = [
   ]
 
 Sg_tags                 = {
-    Name          = "Frontend-sg"
+    Name          = "Salary-sg"
     Enviroment    = "dev"
-    Owner         = "Vishal"
+    Owner         = "Shikha"
   }   
 
-#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+
