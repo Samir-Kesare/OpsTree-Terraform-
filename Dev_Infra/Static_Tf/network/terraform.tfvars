@@ -43,7 +43,7 @@ private_subnets_tags = [{
     Owner = "harshit"
   }]
 
-/*--------------- NAT Gateway ---------------*/
+/*--------------- IGW ---------------*/
 
 igw_tags = {
     Name = "dev-igw-01"
