@@ -49,3 +49,51 @@ resource "aws_nat_gateway" "dev_nat" {
   tags = var.nat_tags
   depends_on = [aws_eip.dev_elastic_ip]
 }
+
+/*--------------- Public Route Table ---------------*/
+
+resource "aws_route_table" "dev_public_rtb" {
+  vpc_id = aws_vpc.vpc-01.id
+  route {
+    cidr_block = var.vpc_cidr
+    gateway_id = "local"
+  }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.dev_igw.id
+  }
+  tags = var.public_route_table_tags
+}
+
+/*--------------- Public RTB Association ---------------*/
+
+resource "aws_route_table_association" "dev_public_route_association01" {
+  count = length(aws_subnet.public_subnets.*.id)
+  subnet_id      = aws_subnet.public_subnets[count.index].id
+  route_table_id = aws_route_table.dev_public_rtb.id
+}
+/*--------------- Private RTB ---------------*/
+
+resource "aws_route_table" "dev_private_rtb" {
+  vpc_id = aws_vpc.vpc-01.id
+  route {
+    cidr_block = var.vpc_cidr
+    gateway_id = "local"
+  }
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.dev_nat.id
+  }
+  tags = var.private_route_table_tags
+  depends_on = [aws_nat_gateway.dev_nat]
+}
+
+/*--------------- Private RTB Association ---------------*/
+
+resource "aws_route_table_association" "dev_private_route_association01" {
+
+  count = length(aws_subnet.private_subnets.*.id)
+  subnet_id      = aws_subnet.private_subnets[count.index].id
+  route_table_id = aws_route_table.dev_private_rtb.id
+  depends_on     = [aws_route_table.dev_private_rtb]
+}
