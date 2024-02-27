@@ -1,34 +1,31 @@
 
-resource "aws_security_group" "salary_sg" {
-  name        = var.security_group_name
-  description = var.security_group_description
-  vpc_id      = var.vpc_id
 
-  // Inbound rule allowing HTTP traffic
-  ingress {
-    from_port   = var.http_port
-    to_port     = var.http_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+locals {
+  inbound_ports         = var.inbound_ports
+  outbound_ports        = var.outbound_ports
+}
+resource "aws_security_group" "sq_grp" {
+  name                  = var.security_name
+  description           = var.Security_description
+  vpc_id                = var.vpc_id
 
-  // Inbound rule allowing SSH traffic
-  ingress {
-    from_port   = var.ssh_port
-    to_port     = var.ssh_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+  for_each              = local.inbound_ports
+  content {
+   from_port            = ingress.value.port
+   to_port              = ingress.value.port
+   protocol             = ingress.value.protocol
+   cidr_blocks          = [ingress.value.cidr_blocks]
   }
-
-  // Outbound rule allowing all traffic
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+ }
+ dynamic "egress" {
+  for_each              = local.outbound_ports
+  content {
+   from_port            = egress.value.port
+   to_port              = egress.value.port
+   protocol             = egress.value.protocol
+   cidr_blocks          = [egress.value.cidr_blocks]
   }
-
-  tags = {
-    Name = var.security_group_name
-  }
+ }
+  tags                  = var.Sg_tags
 }
