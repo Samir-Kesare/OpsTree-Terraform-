@@ -34,3 +34,18 @@ resource "aws_internet_gateway" "dev_igw" {
   vpc_id = aws_vpc.vpc-01.id
   tags = var.igw_tags
 }
+
+/*--------------- Elastic IP ---------------*/
+
+resource "aws_eip" "dev_elastic_ip" {
+  domain = "vpc"
+}
+
+/*--------------- NAT Gateway ---------------*/
+
+resource "aws_nat_gateway" "dev_nat" {
+  allocation_id = aws_eip.dev_elastic_ip.id
+  subnet_id     = aws_subnet.public_subnets[0].id
+  tags = var.nat_tags
+  depends_on = [aws_eip.dev_elastic_ip]
+}

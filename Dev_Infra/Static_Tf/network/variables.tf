@@ -101,3 +101,14 @@ variable "igw_tags" {
     Owner = "harshit"
   }
 }
+
+/*--------------- # NAT Gateway ---------------*/
+
+variable "nat_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-nat-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}

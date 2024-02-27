@@ -14,3 +14,7 @@ output "private-subnets-id" {
 output "dev-igw-id" {
   value = aws_internet_gateway.dev_igw.id
 }
+
+output "dev-nat-id" {
+  value = aws_nat_gateway.dev_nat.id
+}

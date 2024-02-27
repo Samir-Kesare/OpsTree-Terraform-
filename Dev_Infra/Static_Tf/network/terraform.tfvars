@@ -50,3 +50,11 @@ igw_tags = {
     Enviroment = "dev"
     Owner = "harshit"
   }
+
+/*--------------- NAT Gateway ---------------*/
+
+nat_tags = {
+    Name = "dev-nat-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
