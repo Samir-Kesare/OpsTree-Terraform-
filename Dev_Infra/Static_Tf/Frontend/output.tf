@@ -5,3 +5,16 @@ output "Security_Group_ID" {
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------------Launch Template ----------------------------------#
+
+# AMI
+
+output "AMI_ID" {
+    value = [aws_ami_from_instance.AMI.id] 
+}
+
+# Template
+output "launch_template_id" {
+  value = aws_launch_template.Template.id
+}
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
