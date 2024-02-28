@@ -32,6 +32,7 @@ resource "aws_security_group" "salary_sg" {
 }
 
 *-------------------------------------------------------------------------------------------*
+//Launch-Template
 resource "aws_launch_template" "salary_launch_template" {
   name_prefix   = var.launch_template_name_prefix
   description   = var.launch_template_description
