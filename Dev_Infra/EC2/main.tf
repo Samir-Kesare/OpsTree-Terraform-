@@ -60,7 +60,7 @@ resource "aws_instance" "Postgres_Instance" {
   security_groups = [var.security_name]
   
 
-  subnet_id = aws_subnet.private_subnet.id  # Attach instance to the private subnet
+  subnet_id = aws_subnet.private_subnet.id  
 
   root_block_device {
     volume_size = 16
