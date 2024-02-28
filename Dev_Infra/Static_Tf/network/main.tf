@@ -9,7 +9,7 @@ resource "aws_vpc" "dev-vpc" {
 
 /*--------------- Public Subnets ---------------*/
 
-resource "aws_subnet" "public_subnets" {
+resource "aws_subnet" "dev_public_subnets" {
   count                   = length(var.public_subnets_cidr)
   vpc_id                  = aws_vpc.dev-vpc.id
   cidr_block              = var.public_subnets_cidr[count.index]
@@ -20,7 +20,7 @@ resource "aws_subnet" "public_subnets" {
 
 /*--------------- Private Subnets ---------------*/
 
-resource "aws_subnet" "private_subnets" {
+resource "aws_subnet" "dev_private_subnets" {
   count             = length(var.private_subnets_cidr)
   vpc_id            = aws_vpc.dev-vpc.id
   cidr_block        = var.private_subnets_cidr[count.index]
@@ -31,6 +31,6 @@ resource "aws_subnet" "private_subnets" {
 /*--------------- # Internet Gateway ---------------*/
 
 resource "aws_internet_gateway" "dev_igw" {
-  vpc_id = aws_vpc.vpc-01.id
+  vpc_id = aws_vpc.dev-vpc.id
   tags = var.igw_tags
 }
