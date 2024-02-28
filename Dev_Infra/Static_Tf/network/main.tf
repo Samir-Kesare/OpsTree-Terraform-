@@ -27,3 +27,10 @@ resource "aws_subnet" "private_subnets" {
   availability_zone = var.private_subnets_az
   tags              = var.private_subnets_tags[count.index]
 }
+
+/*--------------- # Internet Gateway ---------------*/
+
+resource "aws_internet_gateway" "dev_igw" {
+  vpc_id = aws_vpc.vpc-01.id
+  tags = var.igw_tags
+}

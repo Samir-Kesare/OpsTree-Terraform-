@@ -42,3 +42,11 @@ private_subnets_tags = [{
     Enviroment = "dev"
     Owner = "harshit"
   }]
+
+/*--------------- IGW ---------------*/
+
+igw_tags = {
+    Name = "dev-igw-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }

@@ -90,3 +90,14 @@ variable "private_subnets_tags" {
     Owner = "harshit"
   }]
 }
+
+/*--------------- # Internet Gateway ---------------*/
+
+variable "igw_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-igw-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
