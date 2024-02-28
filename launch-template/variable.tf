@@ -1,4 +1,5 @@
 *----------------------------------------------------------------------------------------------------*
+//Security-Group
 variable "security_group_name" {
   description = "Name of the security group"
   default     = "salary-sg"
@@ -67,6 +68,7 @@ variable "egress_rules" {
 }
 
 *----------------------------------------------------------------------------------------------------*
+//Launch-Template
 variable "launch_template_name_prefix" {
   description = "Prefix for the name of the launch template"
   default     = "salary-launch-template"
