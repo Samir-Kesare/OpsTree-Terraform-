@@ -29,6 +29,11 @@ egress_rules = [
     cidr_blocks = ["0.0.0.0/0"]
   }
 ]
+Sg_tags                 = {
+    Name          = "salary-sg"
+    Enviroment    = "dev"
+    Owner         = "Shikha"
+  }   
 
 *---------------------------------------------------------------------------------------------------*
 //Launch-Template
