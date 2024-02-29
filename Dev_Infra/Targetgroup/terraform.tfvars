@@ -1,7 +1,7 @@
 *--------------------------------------------------------------------------------------------------*
 //Security-Group
-security_group_name = "my-security-group"
-security_group_description = "My security group description"
+security_group_name = "dev-security-group"
+security_group_description = "dev security group description"
 vpc_id = "vpc-0ebc6865d6c6a5460"
 http_port = 8080
 ssh_port = 22
@@ -17,7 +17,7 @@ ingress_rules = [
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["20.0.0.0/28"]
   }
 ]
 
