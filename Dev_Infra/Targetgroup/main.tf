@@ -26,7 +26,11 @@ resource "aws_security_group" "salary_sg" {
   }
 
   // Tags for the security group
-  tags = var.Sg_tags
+  Sg_tags                 = {
+    Name          = "salary-sg"
+    Enviroment    = "dev"
+    Owner         = "Shikha"
+  }   
 }
 
 *-------------------------------------------------------------------------------------------*
