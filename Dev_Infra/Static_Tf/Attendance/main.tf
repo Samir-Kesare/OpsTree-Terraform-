@@ -45,7 +45,7 @@ variable "description" {
 variable "vpc_id" {
   description = "The ID of the VPC"
   type = string
-  default = "vpc-0d744158f7f47f419"
+  default = "vpc-0383f4dc3af051efa"
 }
 
 variable "inbound_rules" {
