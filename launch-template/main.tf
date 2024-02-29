@@ -26,9 +26,8 @@ resource "aws_security_group" "salary_sg" {
   }
 
   // Tags for the security group
-  tags = {
-    Name = var.security_group_name
-  }
+  // Tags for the security group
+   tags = var.Sg_tags
 }
 
 *-------------------------------------------------------------------------------------------*
