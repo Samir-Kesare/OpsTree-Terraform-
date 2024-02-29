@@ -66,6 +66,14 @@ variable "egress_rules" {
     }
   ]
 }
+variable "Sg_tags" {
+  type            = map(string)
+  default         = {
+    Name          = "salary-sg"
+    Enviroment    = "dev"
+    Owner         = "Shikha"
+  }
+}
 
 *----------------------------------------------------------------------------------------------------*
 //Launch-Template
