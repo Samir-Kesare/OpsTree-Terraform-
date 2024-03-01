@@ -35,8 +35,8 @@ variable "public_subnets_cidr" {
 
 variable "public_subnets_az" {
   description = "public subnet availability zones"
-  type        = string
-  default     = "us-east-2a"
+  type        = list(string)
+  default     = ["us-east-2a", "us-east-2b"]
 }
 variable "enable_map_public_ip_on_launch" {
   type    = bool
@@ -128,6 +128,68 @@ variable "private_route_table_tags" {
   type    = map(string)
   default = {
     Name = "dev-private-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+/*--------------- Public Subnet NACL ---------------*/
+variable "public_nacl_ingress" {
+  type    = list(object({
+    rule_no = number
+    protocol = string
+    cidr_block = string
+    from_port = number
+    to_port = number
+    action = string
+  }))
+  default = [{
+    rule_no = 100
+    protocol = "tcp"
+    cidr_block = "0.0.0.0/0"	
+    from_port = 22
+    to_port = 22
+    action = "allow"
+    }, {
+    rule_no = 110
+    protocol = "tcp"
+    cidr_block = "10.0.0.96/27"	
+    from_port = 1024	
+    to_port = 65535
+    action = "allow"
+    }]
+}
+
+variable "public_nacl_egress" {
+  type    = list(object({
+    rule_no = number
+    protocol = string
+    cidr_block = string
+    from_port = number
+    to_port = number
+    action = string
+  }))
+  default = [{
+    rule_no = 100
+    protocol = "tcp"
+    cidr_block = "0.0.0.0/0"	
+    from_port = 22
+    to_port = 22
+    action = "allow"
+    }, {
+    rule_no = 110
+    protocol = "tcp"
+    cidr_block = "10.0.0.96/27"	
+    from_port = 1024	
+    to_port = 65535
+    action = "allow"
+    }]
+}
+
+variable "public_nacl_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-public-nacl-01"
     Enviroment = "dev"
     Owner = "harshit"
   }

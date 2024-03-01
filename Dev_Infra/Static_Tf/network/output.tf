@@ -1,14 +1,14 @@
 output "vpc-id" {
-  value = aws_vpc.vpc-01.id
+  value = aws_vpc.dev_vpc.id
 }
 
 output "public-subnets-id" {
-  value = aws_subnet.public_subnets.*.id
+  value = aws_subnet.dev_public_subnets.*.id
 }
 
 
 output "private-subnets-id" {
-  value = aws_subnet.private_subnets.*.id
+  value = aws_subnet.dev_private_subnets.*.id
 }
 
 output "dev-igw-id" {
@@ -25,4 +25,8 @@ output "dev-public-RTB-id" {
 
 output "dev-private-RTB-id" {
   value = aws_route_table.dev_private_rtb.id
+}
+
+output "dev-public-nacl-id" {
+  value = aws_network_acl.dev_public_subnet_nacl.id
 }

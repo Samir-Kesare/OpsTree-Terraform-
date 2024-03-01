@@ -8,7 +8,7 @@ vpc_tags = {
 /*--------------- Public Subnets ---------------*/
 public_subnets_cidr = ["10.0.0.32/27", "10.0.0.64/27"]
 
-public_subnets_az = "us-east-2a"
+public_subnets_az = ["us-east-2a", "us-east-2b"]
 
 enable_map_public_ip_on_launch = true
 
@@ -69,6 +69,46 @@ public_route_table_tags = {
 
 private_route_table_tags  = {
     Name = "dev-private-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+
+/*--------------- Public NACL ---------------*/
+
+public_nacl_ingress = [{
+    rule_no = 100
+    protocol = "tcp"
+    cidr_block = "0.0.0.0/0"	
+    from_port = 22
+    to_port = 22
+    action = "allow"
+    }, {
+    rule_no = 110
+    protocol = "tcp"
+    cidr_block = "10.0.0.96/27"	
+    from_port = 1024	
+    to_port = 65535
+    action = "allow"
+    }]
+
+public_nacl_egress = [{
+    rule_no = 100
+    protocol = "tcp"
+    cidr_block = "0.0.0.0/0"	
+    from_port = 22
+    to_port = 22
+    action = "allow"
+    }, {
+    rule_no = 110
+    protocol = "tcp"
+    cidr_block = "10.0.0.96/27"	
+    from_port = 1024	
+    to_port = 65535
+    action = "allow"
+    }]
+
+public_nacl_tags  = {
+    Name = "dev-public-nacl-01"
     Enviroment = "dev"
     Owner = "harshit"
   }

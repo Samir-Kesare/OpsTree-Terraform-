@@ -1,6 +1,6 @@
 /*--------------- VPC ---------------*/
 
-resource "aws_vpc" "vpc-01" {
+resource "aws_vpc" "dev_vpc" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = var.vpc_enable_dns_support
   enable_dns_hostnames = var.vpc_enable_dns_hostnames
@@ -9,20 +9,20 @@ resource "aws_vpc" "vpc-01" {
 
 /*--------------- Public Subnets ---------------*/
 
-resource "aws_subnet" "public_subnets" {
+resource "aws_subnet" "dev_public_subnets" {
   count                   = length(var.public_subnets_cidr)
-  vpc_id                  = aws_vpc.vpc-01.id
+  vpc_id                  = aws_vpc.dev_vpc.id
   cidr_block              = var.public_subnets_cidr[count.index]
-  availability_zone       = var.public_subnets_az
+  availability_zone       = var.public_subnets_az[count.index]
   map_public_ip_on_launch = var.enable_map_public_ip_on_launch
   tags                    = var.public_subnets_tags[count.index]
 }
 
 /*--------------- Private Subnets ---------------*/
 
-resource "aws_subnet" "private_subnets" {
+resource "aws_subnet" "dev_private_subnets" {
   count             = length(var.private_subnets_cidr)
-  vpc_id            = aws_vpc.vpc-01.id
+  vpc_id            = aws_vpc.dev_vpc.id
   cidr_block        = var.private_subnets_cidr[count.index]
   availability_zone = var.private_subnets_az
   tags              = var.private_subnets_tags[count.index]
@@ -31,7 +31,7 @@ resource "aws_subnet" "private_subnets" {
 /*--------------- # Internet Gateway ---------------*/
 
 resource "aws_internet_gateway" "dev_igw" {
-  vpc_id = aws_vpc.vpc-01.id
+  vpc_id = aws_vpc.dev_vpc.id
   tags = var.igw_tags
 }
 
@@ -45,7 +45,7 @@ resource "aws_eip" "dev_elastic_ip" {
 
 resource "aws_nat_gateway" "dev_nat" {
   allocation_id = aws_eip.dev_elastic_ip.id
-  subnet_id     = aws_subnet.public_subnets[0].id
+  subnet_id     = aws_subnet.dev_public_subnets[0].id
   tags = var.nat_tags
   depends_on = [aws_eip.dev_elastic_ip]
 }
@@ -53,7 +53,7 @@ resource "aws_nat_gateway" "dev_nat" {
 /*--------------- Public Route Table ---------------*/
 
 resource "aws_route_table" "dev_public_rtb" {
-  vpc_id = aws_vpc.vpc-01.id
+  vpc_id = aws_vpc.dev_vpc.id
   route {
     cidr_block = var.vpc_cidr
     gateway_id = "local"
@@ -68,14 +68,14 @@ resource "aws_route_table" "dev_public_rtb" {
 /*--------------- Public RTB Association ---------------*/
 
 resource "aws_route_table_association" "dev_public_route_association01" {
-  count = length(aws_subnet.public_subnets.*.id)
-  subnet_id      = aws_subnet.public_subnets[count.index].id
+  count = length(aws_subnet.dev_public_subnets.*.id)
+  subnet_id      = aws_subnet.dev_public_subnets[count.index].id
   route_table_id = aws_route_table.dev_public_rtb.id
 }
 /*--------------- Private RTB ---------------*/
 
 resource "aws_route_table" "dev_private_rtb" {
-  vpc_id = aws_vpc.vpc-01.id
+  vpc_id = aws_vpc.dev_vpc.id
   route {
     cidr_block = var.vpc_cidr
     gateway_id = "local"
@@ -92,8 +92,38 @@ resource "aws_route_table" "dev_private_rtb" {
 
 resource "aws_route_table_association" "dev_private_route_association01" {
 
-  count = length(aws_subnet.private_subnets.*.id)
-  subnet_id      = aws_subnet.private_subnets[count.index].id
+  count = length(aws_subnet.dev_private_subnets.*.id)
+  subnet_id      = aws_subnet.dev_private_subnets[count.index].id
   route_table_id = aws_route_table.dev_private_rtb.id
   depends_on     = [aws_route_table.dev_private_rtb]
+}
+
+/*--------------- Public Subnet NACL ---------------*/
+
+resource "aws_network_acl" "dev_public_subnet_nacl" {
+  vpc_id = aws_vpc.dev_vpc.id
+
+  dynamic "ingress" {
+    for_each = var.public_nacl_ingress
+    content {
+      protocol   = ingress.value.protocol
+      rule_no    = ingress.value.rule_no
+      action     = ingress.value.action
+      cidr_block = ingress.value.cidr_block
+      from_port  = ingress.value.from_port
+      to_port    = ingress.value.to_port
+    }
+  }
+  dynamic "egress" {
+    for_each = var.public_nacl_egress
+    content {
+      protocol   = egress.value.protocol
+      rule_no    = egress.value.rule_no
+      action     = egress.value.action
+      cidr_block = egress.value.cidr_block
+      from_port  = egress.value.from_port
+      to_port    = egress.value.to_port
+    }
+  }
+  tags = var.public_nacl_tags
 }
