@@ -8,7 +8,7 @@ vpc_tags = {
 /*--------------- Public Subnets ---------------*/
 public_subnets_cidr = ["10.0.0.32/27", "10.0.0.64/27"]
 
-public_subnets_az = "us-east-2a"
+public_subnets_az = ["us-east-2a", "us-east-2b"]\
 
 enable_map_public_ip_on_launch = true
 
