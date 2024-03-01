@@ -35,8 +35,8 @@ variable "public_subnets_cidr" {
 
 variable "public_subnets_az" {
   description = "public subnet availability zones"
-  type        = string
-  default     = "us-east-2a"
+  type        = list(string)
+  default     = ["us-east-2a", "us-east-2b"]
 }
 variable "enable_map_public_ip_on_launch" {
   type    = bool
