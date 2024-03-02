@@ -137,7 +137,7 @@ variable "private_route_table_tags" {
   }
 }
 
-/*--------------- Public Subnet NACL ---------------*/
+/*--------------- Frontend Subnet NACL ---------------*/
 variable "frontend_nacl_ingress" {
   type    = list(object({
     rule_no = number

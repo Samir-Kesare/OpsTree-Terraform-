@@ -74,7 +74,7 @@ private_route_table_tags  = {
     Owner = "harshit"
   }
 
-/*--------------- Public NACL ---------------*/
+/*--------------- Frontend NACL ---------------*/
 
 frontend_nacl_ingress = [{
     rule_no = 100
