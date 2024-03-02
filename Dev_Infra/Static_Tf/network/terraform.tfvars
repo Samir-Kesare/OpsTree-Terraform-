@@ -75,40 +75,82 @@ private_route_table_tags  = {
 
 /*--------------- Public NACL ---------------*/
 
-public_nacl_ingress = [{
+frontend_nacl_ingress = [{
     rule_no = 100
     protocol = "tcp"
-    cidr_block = "0.0.0.0/0"	
+    cidr_block = "20.0.0.0/28"	
     from_port = 22
     to_port = 22
     action = "allow"
     }, {
     rule_no = 110
     protocol = "tcp"
-    cidr_block = "10.0.0.96/27"	
-    from_port = 1024	
-    to_port = 65535
+    cidr_block = "10.0.1.0/28"	
+    from_port = 3000	
+    to_port = 3000
+    action = "allow"
+    }, {
+    rule_no = 120
+    protocol = "udp"
+    cidr_block = "10.0.1.0/28"	
+    from_port = 1194	
+    to_port = 1194
+    action = "allow"
+    }, {
+    rule_no = 130
+    protocol = "tcp"
+    cidr_block = "10.0.1.0/28"	
+    from_port = 22
+    to_port = 22
     action = "allow"
     }]
 
-public_nacl_egress = [{
+frontend_nacl_egress = [{
     rule_no = 100
     protocol = "tcp"
-    cidr_block = "0.0.0.0/0"	
+    cidr_block = "20.0.0.0/28"	
     from_port = 22
     to_port = 22
     action = "allow"
     }, {
-    rule_no = 110
+    rule_no = 120
     protocol = "tcp"
-    cidr_block = "10.0.0.96/27"	
-    from_port = 1024	
-    to_port = 65535
+    cidr_block = "10.0.1.0/28"	
+    from_port = 3000
+    to_port = 3000
+    action = "allow"
+    }, {
+    rule_no = 130
+    protocol = "tcp"
+    cidr_block = "10.0.1.0/28"	
+    from_port = 32768
+    to_port =  65535
+    action = "allow"
+    }, {
+    rule_no = 140
+    protocol = "tcp"
+    cidr_block = "20.0.0.0/28"	
+    from_port = 1024
+    to_port =   65535
+    action = "allow"
+    }, {
+    rule_no = 150
+    protocol = "tcp"
+    cidr_block = "0.0.0.0/0"	
+    from_port = 1024
+    to_port =   65535
+    action = "allow"
+    }, {
+    rule_no = 160
+    protocol = "tcp"
+    cidr_block = "10.0.1.0/28"	
+    from_port = 22
+    to_port =   22
     action = "allow"
     }]
 
-public_nacl_tags  = {
-    Name = "dev-public-nacl-01"
+frontend_nacl_tags  = {
+    Name = "dev-frontend-nacl-01"
     Enviroment = "dev"
     Owner = "harshit"
   }

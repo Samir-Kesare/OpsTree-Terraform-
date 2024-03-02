@@ -100,11 +100,11 @@ resource "aws_route_table_association" "dev_private_route_association01" {
 
 /*--------------- Public Subnet NACL ---------------*/
 
-resource "aws_network_acl" "dev_public_subnet_nacl" {
+resource "aws_network_acl" "dev_frontend_nacl" {
   vpc_id = aws_vpc.dev_vpc.id
 
   dynamic "ingress" {
-    for_each = var.public_nacl_ingress
+    for_each = var.frontend_nacl_ingress
     content {
       protocol   = ingress.value.protocol
       rule_no    = ingress.value.rule_no
@@ -115,7 +115,7 @@ resource "aws_network_acl" "dev_public_subnet_nacl" {
     }
   }
   dynamic "egress" {
-    for_each = var.public_nacl_egress
+    for_each = var.frontend_nacl_egress
     content {
       protocol   = egress.value.protocol
       rule_no    = egress.value.rule_no
@@ -125,5 +125,5 @@ resource "aws_network_acl" "dev_public_subnet_nacl" {
       to_port    = egress.value.to_port
     }
   }
-  tags = var.public_nacl_tags
+  tags = var.frontend_nacl_tags
 }

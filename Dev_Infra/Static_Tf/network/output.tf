@@ -27,6 +27,6 @@ output "dev-private-RTB-id" {
   value = aws_route_table.dev_private_rtb.id
 }
 
-output "dev-public-nacl-id" {
-  value = aws_network_acl.dev_public_subnet_nacl.id
+output "dev-frontend-nacl-id" {
+  value = aws_network_acl.dev_frontend_nacl.id
 }

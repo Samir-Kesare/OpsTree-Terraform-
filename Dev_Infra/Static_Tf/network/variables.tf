@@ -134,7 +134,7 @@ variable "private_route_table_tags" {
 }
 
 /*--------------- Public Subnet NACL ---------------*/
-variable "public_nacl_ingress" {
+variable "frontend_nacl_ingress" {
   type    = list(object({
     rule_no = number
     protocol = string
@@ -143,24 +143,9 @@ variable "public_nacl_ingress" {
     to_port = number
     action = string
   }))
-  default = [{
-    rule_no = 100
-    protocol = "tcp"
-    cidr_block = "0.0.0.0/0"	
-    from_port = 22
-    to_port = 22
-    action = "allow"
-    }, {
-    rule_no = 110
-    protocol = "tcp"
-    cidr_block = "10.0.0.96/27"	
-    from_port = 1024	
-    to_port = 65535
-    action = "allow"
-    }]
 }
 
-variable "public_nacl_egress" {
+variable "frontend_nacl_egress" {
   type    = list(object({
     rule_no = number
     protocol = string
@@ -169,27 +154,12 @@ variable "public_nacl_egress" {
     to_port = number
     action = string
   }))
-  default = [{
-    rule_no = 100
-    protocol = "tcp"
-    cidr_block = "0.0.0.0/0"	
-    from_port = 22
-    to_port = 22
-    action = "allow"
-    }, {
-    rule_no = 110
-    protocol = "tcp"
-    cidr_block = "10.0.0.96/27"	
-    from_port = 1024	
-    to_port = 65535
-    action = "allow"
-    }]
 }
 
-variable "public_nacl_tags" {
+variable "frontend_nacl_tags" {
   type    = map(string)
   default = {
-    Name = "dev-public-nacl-01"
+    Name = "dev-frontend-nacl-01"
     Enviroment = "dev"
     Owner = "harshit"
   }
