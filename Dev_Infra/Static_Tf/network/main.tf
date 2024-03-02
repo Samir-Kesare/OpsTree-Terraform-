@@ -98,7 +98,7 @@ resource "aws_route_table_association" "dev_private_route_association01" {
   depends_on     = [aws_route_table.dev_private_rtb]
 }
 
-/*--------------- Public Subnet NACL ---------------*/
+/*--------------- Frontend Subnet NACL ---------------*/
 
 resource "aws_network_acl" "dev_frontend_nacl" {
   vpc_id = aws_vpc.dev_vpc.id

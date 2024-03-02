@@ -1,3 +1,4 @@
+region = "us-east-2"
 /*--------------- VPC ---------------*/
 vpc_tags = {
     Name = "dev-vpc"
