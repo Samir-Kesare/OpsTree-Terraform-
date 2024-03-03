@@ -79,3 +79,15 @@ alb_listener_type                  = "forward"
 
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+autoscaling_group_name       = "Dev_Frontend_ASG"
+min_size                     = 1
+max_size                     = 2
+desired_capacity             = 1
+subnet_ids                   = ["subnet-04c0c823118f48202"]   # Frontend-Pvt-Subnet ID
+tag_key                      = "Name"
+tag_value                    = "Dev_Frontend_ASG"      
+propagate_at_launch          = true
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
