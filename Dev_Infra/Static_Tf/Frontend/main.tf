@@ -158,3 +158,28 @@ resource "aws_lb_listener" "Listener" {
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+
+
+resource "aws_autoscaling_group" "Frontend_asg" {
+  name                  = var.autoscaling_group_name
+  launch_template {
+    id                  = aws_launch_template.Template.id
+    version             = "$Latest"
+  }
+  min_size              = var.min_size
+  max_size              = var.max_size
+  desired_capacity      = var.desired_capacity
+  vpc_zone_identifier   = var.subnet_ids
+  target_group_arns     = [
+    aws_lb_target_group.Target_group.arn
+  ]
+  tag {
+    key                 = var.tag_key
+    value               = var.tag_value
+    propagate_at_launch = var.propagate_at_launch
+  }
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
