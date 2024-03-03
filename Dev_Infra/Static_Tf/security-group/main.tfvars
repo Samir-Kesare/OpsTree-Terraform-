@@ -60,4 +60,4 @@ health_check_healthy_threshold = 2
 health_check_unhealthy_threshold = 2
 
 listener_rule_priority = 100
-listener_rule_host_values = ["example.com"]
+listener_rule_host_values = ["/api/v1/salary/"]
