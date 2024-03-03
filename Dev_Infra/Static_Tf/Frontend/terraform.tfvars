@@ -21,3 +21,24 @@ Sg_tags                       = {
   }   
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------------Launch Template ----------------------------------#
+
+#AMI
+
+AMI_name                = "Dev-Fronted-AMI" 
+AMI_Instance_ID         = "i-0572a5faad61b261e"    # Dev-Frontend Instance ID
+
+# Priavte Key
+
+private_key_algorithm   = "RSA"
+private_key_rsa_bits    = 4096
+
+# Launch Template
+
+template_name           = "Dev-Frontend-template"
+template_description    = "Template for Dev-Frontend"  
+instance_type           = "t2.micro" 
+instance_keypair        = "Dev_Key" 
+subnet_ID               = "subnet-04c0c823118f48202"
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
