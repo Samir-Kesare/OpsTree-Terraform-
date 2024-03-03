@@ -10,7 +10,7 @@ ingress_rules = [
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["sg-0367a02ed8f7d5565"] //Dev-Salary-lb-sg ID
+    cidr_blocks = ["sg-09132d5dee9e5e106"] //Dev-Salary-lb-sg ID
   },
   {
     from_port   = 22
