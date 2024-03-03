@@ -183,3 +183,21 @@ resource "aws_autoscaling_group" "Frontend_asg" {
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#---------------------------- Auto Scaling Policies -------------------------------#
+
+resource "aws_autoscaling_policy" "Dev_ASG_Policy" {
+  name                        = var.scaling_policy_name
+  autoscaling_group_name      = aws_autoscaling_group.Frontend_asg.name
+  policy_type                 = var.policy_type
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = var.predefined_metric_type
+    }
+
+    target_value = var.target_value
+
+  }
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
