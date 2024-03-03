@@ -46,3 +46,10 @@ output "Listener_arn" {
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+output "Autoscaling_group_id" {
+  value = [aws_autoscaling_group.Frontend_asg.id]
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
