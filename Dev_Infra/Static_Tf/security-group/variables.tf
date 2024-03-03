@@ -17,6 +17,10 @@ variable "http_port" {
   description = "Port for HTTP traffic"
   default     = 8080
 }
+variable "ssh_port" {
+  description = "Port for SSH traffic"
+  default     = 22
+}
 
 variable "ssh_port" {
   description = "Port for SSH traffic"
@@ -33,16 +37,22 @@ variable "ingress_rules" {
   }))
   default = [
     {
-      from_port   = 8080
+      from_port   = 8080 
       to_port     = 8080
       protocol    = "tcp"
-      cidr_blocks = ["sg-0367a02ed8f7d5565"]
+      cidr_blocks = ["sg-0367a02ed8f7d5565"] //Dev-Frontend-lb-sg ID  
     },
     {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = ["20.0.0.0/28"]
+      cidr_blocks = ["20.0.0.0/28"]  //Management VPC Cidr Block
+    },
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = ["sg-0367a02ed8f7d5565"]  //OpenVPN-SG
     }
   ]
 }
