@@ -82,3 +82,70 @@ variable "Sg_tags" {
     Owner         = "Shikha"
   }
 }
+*--------------------------------------------------------------------------------------------------*
+variable "alb_name" {
+  description = "Name for the ALB"
+}
+
+variable "internal_alb" {
+  description = "Whether the ALB is internal or not"
+}
+
+variable "security_groups" {
+  description = "List of security group IDs for the ALB"
+  type        = list(string)
+}
+
+variable "subnets" {
+  description = "List of subnet IDs for the ALB"
+  type        = list(string)
+}
+
+variable "listener_port" {
+  description = "Port for the listener"
+}
+
+variable "target_group_name" {
+  description = "Name for the target group"
+}
+
+variable "target_group_port" {
+  description = "Port for the target group"
+}
+
+variable "vpc_id" {
+  description = "ID of the VPC"
+}
+
+variable "health_check_path" {
+  description = "Path for the health check"
+}
+
+variable "health_check_port" {
+  description = "Port for the health check"
+}
+
+variable "health_check_timeout" {
+  description = "Timeout for the health check"
+}
+
+variable "health_check_interval" {
+  description = "Interval for the health check"
+}
+
+variable "health_check_healthy_threshold" {
+  description = "Healthy threshold for the health check"
+}
+
+variable "health_check_unhealthy_threshold" {
+  description = "Unhealthy threshold for the health check"
+}
+
+variable "listener_rule_priority" {
+  description = "Priority for the listener rule"
+}
+
+variable "listener_rule_host_values" {
+  description = "Host header values for the listener rule"
+  type        = list(string)
+}
