@@ -1,14 +1,13 @@
-
 #---------------------------------Security Group ----------------------------------#
 
 locals {
   inbound_ports         = var.inbound_ports
   outbound_ports        = var.outbound_ports
 }
-resource "aws_security_group" "sq_grp" {
+resource "aws_security_group" "security_group" {
   name                  = var.security_name
   description           = var.Security_description
-  vpc_id                = var.vpc_id
+  vpc_id                = var.SG_vpc_id
 
   dynamic "ingress" {
   for_each              = local.inbound_ports
@@ -16,7 +15,9 @@ resource "aws_security_group" "sq_grp" {
    from_port            = ingress.value.port
    to_port              = ingress.value.port
    protocol             = ingress.value.protocol
-   cidr_blocks          = [ingress.value.cidr_blocks]
+   # Conditionally apply CIDR block or security group rule based on type
+   cidr_blocks      = contains(keys(ingress.value), "cidr_blocks") ? [ingress.value.cidr_blocks] : null
+   security_groups  = contains(keys(ingress.value), "security_group_ids") ? [ingress.value.security_group_ids] : null
   }
  }
  dynamic "egress" {
