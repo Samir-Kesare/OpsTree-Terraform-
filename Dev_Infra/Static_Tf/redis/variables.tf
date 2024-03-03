@@ -10,6 +10,10 @@ variable "openvpn_sg_id" {
   description = "SG id of OpenVPN server"
   type        = string
 }
+variable "management_vpc_cidr" {
+  description = "Management VPC Subnet CIDR"
+  type        = string
+}
 variable "redis_port" {
   description = "Default redis port"
   type        = string
