@@ -61,7 +61,7 @@ resource "aws_launch_template" "Attendance_Launch_Template" {
   key_name      = aws_key_pair.key_pair.key_name
 
   network_interfaces {
-    security_groups         = [aws_security_group.attendance-sg.id]
+    security_groups         = [aws_security_group.attendance_sg.id]
     subnet_id               = var.subnet_ID
   }
 
