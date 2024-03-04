@@ -196,9 +196,7 @@ variable "health_check_unhealthy_threshold" {
   default     = 2
 }
 
-// Load balancer 
-
-# Configure ALB
+// Listener rule
 
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
