@@ -38,8 +38,13 @@ variable "inbound_rules" {
       protocol = "tcp"  
     },
     {
+      port     = 22
+      source   = "sg-0d407b10c0ca8fe22" // Replace it with OpenVPN-sg
+      protocol = "tcp"  
+    },
+    {
       port     = 8080
-      source   = "0.0.0.0/0" // replace it with frontend-lb-sg
+      source   = "0.0.0.0/0" // replace it with attendance-lb-sg
       protocol = "tcp"  
     }
   ]
