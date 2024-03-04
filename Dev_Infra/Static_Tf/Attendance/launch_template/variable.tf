@@ -1,3 +1,70 @@
+// Security Groups 
+variable "security_group_name" {
+  description = "security group name"
+  type            = string
+  default         = "attendance-sg"
+}
+
+variable "description" {
+  description = "security group for Attendance API"
+  type            = string
+  default         = "Security group for Attendance-API"
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC"
+  type = string
+  default = "vpc-0d744158f7f47f419"
+}
+
+variable "inbound_rules" {
+  description = "List of inbound rules for the security group"
+  type = list(object({
+    port     = number
+    source   = string
+    protocol = string
+  }))
+  default = [
+    {
+      port     = 22
+      source   = "20.0.0.0/28"   //cidr for management vpc 
+      protocol = "tcp"  
+    },
+    {
+      port     = 8080
+      source   = "0.0.0.0/0" // replace it with frontend-lb-sg
+      protocol = "tcp"  
+    }
+  ]
+}
+
+variable "outbound_rules" {
+  description = "List of outbound rules for the security group"
+  type = list(object({
+    port     = number
+    source   = string
+    protocol = string
+  }))
+  default = [
+    {
+      port     = 0 // allow all ports 
+      source   = "0.0.0.0/0"
+      protocol = "-1"  // all protocols
+    }
+  ]
+}
+
+variable "sg_tags" {
+  description = "Tag for Attedance sg"
+  type        = map(string)
+  default     = {
+    Name = "Attendance-sg"
+    Environment = "Dev"
+    Owner         = "Vidhi"
+  }
+}
+
+// launch template
 variable "template_name" {
   description = "The name of the launch template"
   type        = string
@@ -22,17 +89,6 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "key_name" {
-  description = "The name of the key pair"
-  type        = string
-}
-
-variable "security_group_ids" {
-  description = "The IDs of the security groups"
-  type        = list(string)             // can be multiple security groups, not just one
-  default     = ["sg-0f41d86318091e8ef"]
-}
-
 variable "subnet_ID" {
   description = "The ID of the subnet"
   type        = string
@@ -42,4 +98,36 @@ variable "subnet_ID" {
 variable "region" {
   description = "AWS region"
   default     = "ap-northeast-1"
+}
+
+// AMI
+
+variable "AMI_name" {
+  description     = "Give AMI Name"
+  type            = string
+  default         = "Dev-Fronted-AMI" 
+}
+variable "AMI_Instance_ID" {
+  description     = "Give Dev-Frontend Instance ID"
+  type            = string
+  default         = "i-0572a5faad61b261e"  # Dev-Frontend Instance ID
+}
+
+// Generate Key
+
+variable "private_key_algorithm" {
+  description = "value"
+  type = string
+  default = "RSA"
+}
+variable "private_key_rsa_bits" {
+  description = "value"
+  type = number
+  default = 4096
+}
+
+variable "instance_keypair" {
+  description     = "Launch Template Instance Type keypair name"
+  type            = string
+  default         = "Dev_Key"  
 }
