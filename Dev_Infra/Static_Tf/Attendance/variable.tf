@@ -70,3 +70,61 @@ variable "sg_tags" {
     Owner         = "Vidhi"
   }
 }
+
+// launch template
+variable "template_name" {
+  description = "The name of the launch template"
+  type        = string
+  default     = "AttendanceAPI-Launch-Template"
+}
+
+variable "template_description" {
+  description = "description of launch template"
+  type        = string
+  default     = "Launch template for attendance api"
+}
+
+variable "instance_type" {
+  description = "The type of instance to launch"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "subnet_ID" {
+  description = "The ID of the subnet"
+  type        = string
+  default     = "subnet-0e01736fe7c278323"
+}
+
+
+// AMI
+
+variable "AMI_name" {
+  description     = "Give AMI Name"
+  type            = string
+  default         = "Dev-Attendance-AMI" 
+}
+variable "AMI_Instance_ID" {
+  description     = "Give Dev-Attendance Instance ID"
+  type            = string
+  default         = "i-0572a5faad61b261e"  # Instance ID of Attendance-API
+}
+
+// Generate Key
+
+variable "private_key_algorithm" {
+  description = "value"
+  type = string
+  default = "RSA"
+}
+variable "private_key_rsa_bits" {
+  description = "value"
+  type = number
+  default = 4096
+}
+
+variable "instance_keypair" {
+  description     = "Launch Template Instance Type keypair name"
+  type            = string
+  default         = "Dev_Key"  
+}
