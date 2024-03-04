@@ -77,12 +77,6 @@ variable "template_description" {
   default     = "Launch template for attendance api"
 }
 
-variable "image_id" {
-  description = "ID of the AMI"
-  type        = string
-  default     = "ami-0a931e3a8c9589ff9"
-}
-
 variable "instance_type" {
   description = "The type of instance to launch"
   type        = string
@@ -95,6 +89,8 @@ variable "subnet_ID" {
   default     = "subnet-0e01736fe7c278323"
 }
 
+
+// AWS region in provider.tf
 variable "region" {
   description = "AWS region"
   default     = "ap-northeast-1"
