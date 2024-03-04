@@ -16,3 +16,7 @@ output "key_pair_name" {
 output "AMI_ID" {
     value = [aws_ami_from_instance.AMI.id] 
 }
+
+output "Target_group_id" {
+  value = [aws_lb_target_group.Target_group.id]
+}

@@ -133,3 +133,66 @@ variable "instance_keypair" {
   type            = string
   default         = "Dev_Key"  
 }
+
+// Target groups 
+
+variable "target_group_name" {
+  description = "The name of the target group"
+  type        = string
+  default         = "Dev-Attendance-TG"
+}
+
+variable "target_group_port" {
+  description = "The port on which targets receive traffic"
+  type        = number
+  default         = 8080
+}
+
+variable "target_group_protocol" {
+  description = "The protocol to use for routing traffic to the targets"
+  type        = string
+  default         = "HTTP"
+}
+
+variable "TG_vpc_id" {
+  description = "The VPC ID"
+  type        = string
+  default         = "vpc-0383f4dc3af051efa" // dev vpc id
+}
+
+variable "health_check_path" {
+  description = "The destination for the health check request"
+  type        = string
+  default         = "/api/v1/attendance/health"
+}
+
+variable "health_check_port" {
+  description = "The port to use to connect with the target"
+  type        = string
+  default         = "traffic-port"
+}
+
+variable "health_check_interval" {
+  description = "The approximate amount of time, in seconds, between health checks of an individual target"
+  type        = number
+  default         = 30
+}
+
+variable "health_check_timeout" {
+  description = "The amount of time, in seconds, during which no response from a target means a failed health check"
+  type        = number
+  default         = 5
+}
+
+variable "health_check_healthy_threshold" {
+  description = "The number of consecutive health checks successes required before considering an unhealthy target healthy"
+  type        = number
+  default     = 5
+}
+
+variable "health_check_unhealthy_threshold" {
+  description = "The number of consecutive health check failures required before considering a target unhealthy"
+  type        = number
+  default     = 2
+}
+

@@ -61,7 +61,7 @@ resource "aws_launch_template" "Attendance_Launch_Template" {
   key_name      = aws_key_pair.key_pair.key_name
 
   network_interfaces {
-    security_groups         = [aws_security_group.attendance-sg.id]
+    security_groups         = [aws_security_group.attendance_sg.id]
     subnet_id               = var.subnet_ID
   }
 
@@ -70,4 +70,27 @@ resource "aws_launch_template" "Attendance_Launch_Template" {
     Name                  = var.template_name
   }
 
+}
+
+// Target groups 
+
+resource "aws_lb_target_group" "Target_group" {
+  name        = var.target_group_name
+  port        = var.target_group_port
+  protocol    = var.target_group_protocol
+  vpc_id      = var.TG_vpc_id
+
+  health_check {
+    path                = var.health_check_path
+    protocol            = var.target_group_protocol
+    port                = var.health_check_port
+    interval            = var.health_check_interval
+    timeout             = var.health_check_timeout
+    healthy_threshold   = var.health_check_healthy_threshold
+    unhealthy_threshold = var.health_check_unhealthy_threshold
+  }
+
+  tags = {
+    Name = var.target_group_name
+  }
 }
