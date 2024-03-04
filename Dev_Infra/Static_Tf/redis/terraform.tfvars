@@ -8,3 +8,4 @@ key_name            = "redisKey.pem"
 redis_server_type   = "t2.medium"
 db_subnet_id        = "subnet-0eb88feb4f7ec9f95"
 redis_name          = "standaloneRedisServer"
+
