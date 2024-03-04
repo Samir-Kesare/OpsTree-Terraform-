@@ -1,5 +1,11 @@
 // VARIABLES
 
+// AWS region in provider.tf
+variable "region" {
+  description = "AWS region"
+  default     = "ap-northeast-1"
+}
+
 variable "security_group_name" {
   description = "security group name"
   type            = string
