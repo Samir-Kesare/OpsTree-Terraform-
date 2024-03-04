@@ -94,3 +94,24 @@ resource "aws_lb_target_group" "Target_group" {
     Name = var.target_group_name
   }
 }
+
+// Listener
+
+// Create listener rule for attendance
+
+resource "aws_lb_listener_rule" "path_rule" {
+  listener_arn = var.listener_arn
+  priority     = 100
+  
+  action {
+    type             = var.action_type
+    target_group_arn = var.target_group_arn
+  }
+  
+  condition {
+    path_pattern {
+      values = [var.path_pattern]
+    }
+  }
+}
+

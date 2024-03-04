@@ -196,3 +196,30 @@ variable "health_check_unhealthy_threshold" {
   default     = 2
 }
 
+// Load balancer 
+
+# Configure ALB
+
+variable "listener_arn" {
+  description = "ARN of the existing listener where the rule will be added"
+  type        = string
+  default = "arn:aws:elasticloadbalancing:us-east-1:533267160240:listener/app/Dev-ALB/e7db9e384a0d3b57/9328f434b5c51530"
+}
+
+variable "path_pattern" {
+  description = "Path pattern for the listener rule"
+  type        = string
+  default     = "/api/v1/attendance/*"
+}
+
+variable "action_type" {
+  description = "Path pattern for the listener rule"
+  type        = string
+  default     = "forward"
+}
+
+variable "target_group_arn" {
+  description = "ARN of the target group"
+  type        = string
+  default     = "arn:aws:elasticloadbalancing:us-east-1:533267160240:targetgroup/frontend-tg/ca940a625b09acda"
+}
