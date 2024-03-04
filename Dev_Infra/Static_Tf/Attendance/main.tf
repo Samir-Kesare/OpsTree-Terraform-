@@ -1,6 +1,6 @@
 // RESOURCES
 
-resource "aws_security_group" "attendance-sg" {
+resource "aws_security_group" "attendance_sg" {
   name        = var.security_group_name
   description = var.description
   vpc_id      = var.vpc_id
