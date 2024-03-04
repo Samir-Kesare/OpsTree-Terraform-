@@ -25,12 +25,38 @@ resource "aws_security_group" "attendance-sg" {
   tags = var.sg_tags
 }
 
+// AMI 
+resource "aws_ami_from_instance" "AMI" {
+  name               = var.AMI_name
+  source_instance_id = var.AMI_Instance_ID
+}
+
+
+// Private Key
+resource "tls_private_key" "private_key" {
+  algorithm = var.private_key_algorithm
+  rsa_bits  = var.private_key_rsa_bits
+}
+
+// SSH Key Pair
+resource "aws_key_pair" "key_pair" {
+  key_name   = var.instance_keypair
+  public_key = tls_private_key.private_key.public_key_openssh
+}
+
+// Download Private Key in PEM Format
+resource "local_file" "private_key" {
+  content  = tls_private_key.private_key.private_key_pem
+  filename = "${var.instance_keypair}.pem"
+}
+
+// Launch template
 resource "aws_launch_template" "Attendance_Launch_Template" {
   name          = var.template_name
   description   = var.template_description
-  image_id      = var.image_id
+  image_id      = aws_ami_from_instance.AMI.id
   instance_type = var.instance_type
-  key_name = var.key_name
+  key_name      = aws_key_pair.key_pair.key_name
 
   network_interfaces {
     security_groups         = var.security_group_ids
