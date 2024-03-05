@@ -235,3 +235,85 @@ variable "db_nacl_tags" {
     Owner = "harshit"
   }
 }
+
+/*--------------- ALB Security Group ---------------*/
+
+variable "alb_sg_name" {
+  description = "security group name"
+  type            = string
+  default         = "dev-alb-sg"
+}
+
+variable "alb_sg_description" {
+  description = "security group for Attendance API"
+  type            = string
+  default         = "Security group for Dev-ALB"
+}
+
+variable "alb_sg_inbound_rules" {
+  description = "List of inbound rules for the security group"
+  type = list(object({
+    port     = number
+    source   = string
+    protocol = string
+  }))
+  default = [{
+      port     = 80
+      source   = "0.0.0.0/0" 
+      protocol = "tcp"  
+    }, {
+      port     = 443
+      source   = "0.0.0.0/0" 
+      protocol = "tcp"  
+    }]
+}
+
+variable "alb_sg_outbound_rules" {
+  description = "List of outbound rules for the security group"
+  type = list(object({
+    port     = number
+    source   = string
+    protocol = string
+  }))
+  default = [
+    {
+      port     = 0 // allow all ports 
+      source   = "0.0.0.0/0"
+      protocol = "-1"  // all protocols
+    }
+  ]
+}
+
+variable "alb_sg_tags" {
+  description = "Tag for Attedance sg"
+  type        = map(string)
+  default     = {
+    Environment = "dev"
+    Owner       = "harshit"
+  }
+}
+
+/*--------------- ALB ---------------*/
+variable "alb_name" {
+  type = string
+  default = "dev-alb"
+}
+variable "alb_internal" {
+  type = bool
+  default = false 
+}
+variable "elb_type" {
+  type = string
+  default = "application"  
+}
+variable "alb_deletion_protection" {
+  type = bool
+  default = true
+}
+variable "alb_tags" {
+  type    = map(string)
+  default = {
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}

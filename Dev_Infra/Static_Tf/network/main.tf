@@ -205,3 +205,47 @@ resource "aws_network_acl_association" "dev_db_nacl_assc" {
   network_acl_id = aws_network_acl.dev_db_nacl.id
   subnet_id      = aws_subnet.dev_private_subnets[2].id
 }
+
+/*--------------- ALB Security Group ---------------*/
+
+
+resource "aws_security_group" "dev_alb_sg" {
+  name        = var.alb_sg_name
+  description = var.alb_sg_description
+  vpc_id      = aws_vpc.dev_vpc.id
+
+  dynamic "ingress" {
+    for_each = var.alb_sg_inbound_rules
+    content {
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = ingress.value.protocol
+      cidr_blocks = [ingress.value.source]
+    }
+  }
+
+  dynamic "egress" {
+    for_each = var.alb_sg_outbound_rules
+    content {
+      from_port       = egress.value.port
+      to_port         = egress.value.port
+      protocol        = egress.value.protocol
+      cidr_blocks     = [egress.value.source]
+    }
+  }
+  tags = var.alb_sg_tags
+}
+
+/*--------------- ALB ---------------*/
+
+resource "aws_lb" "dev_alb" {
+  name               = var.alb_name
+  internal           = var.alb_internal
+  load_balancer_type = var.elb_type
+  security_groups    = [aws_security_group.dev_alb_sg.id]
+  subnets            = [for subnet in aws_subnet.dev_public_subnets : subnet.id]
+
+  enable_deletion_protection = var.alb_deletion_protection
+
+  tags = var.alb_tags
+}

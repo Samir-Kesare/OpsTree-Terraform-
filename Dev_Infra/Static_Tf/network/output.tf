@@ -38,3 +38,11 @@ output "dev-backend-nacl-id" {
 output "dev-db-nacl-id" {
   value = aws_network_acl.dev_db_nacl.id
 }
+
+output "alb-sg-id" {
+  value = aws_security_group.dev_alb_sg.id  
+}
+
+output "dev-alb-dns" {
+  value = aws_lb.dev_alb.dns_name
+}

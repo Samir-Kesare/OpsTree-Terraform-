@@ -307,3 +307,43 @@ db_nacl_tags  = {
     Enviroment = "dev"
     Owner = "harshit"
   }
+
+/*--------------- ALB Security Group ---------------*/
+
+alb_sg_name = "dev-alb-sg"
+
+alb_sg_description = "Security group for Dev-ALB"
+
+alb_sg_inbound_rules  = [{
+      port     = 80
+      source   = "0.0.0.0/0" 
+      protocol = "tcp"  
+    }, {
+      port     = 443
+      source   = "0.0.0.0/0" 
+      protocol = "tcp"  
+    }]
+
+alb_sg_outbound_rules  = [
+    {
+      port     = 0  
+      source   = "0.0.0.0/0"
+      protocol = "-1"  
+    }
+  ]
+
+alb_sg_tags = {
+    Environment = "dev"
+    Owner       = "harshit"
+  }
+
+/*--------------- ALB ---------------*/
+
+ alb_deletion_protection = true
+ alb_name = "dev-alb"
+ elb_type = "application"
+ alb_internal = false
+ alb_tags = {
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
