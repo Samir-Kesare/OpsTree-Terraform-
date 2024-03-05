@@ -82,3 +82,62 @@ variable "Sg_tags" {
     Owner         = "Shikha"
   }
 }
+
+*-------------------------------------------------------------------------------------------------*
+// launch template
+variable "template_name" {
+  description = "The name of the launch template"
+  type        = string
+  default     = "Salary API-Launch-Template"
+}
+
+variable "template_description" {
+  description = "description of launch template"
+  type        = string
+  default     = "Launch template for salary api"
+}
+
+variable "instance_type" {
+  description = "The type of instance to launch"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "subnet_ID" {
+  description = "The ID of the subnet"
+  type        = string
+  default     = "subnet-013843b2702f341f4"
+}
+
+
+// AMI
+
+variable "AMI_name" {
+  description     = " AMI Name"
+  type            = string
+  default         = "Dev-Salary-AMI" 
+}
+variable "AMI_Instance_ID" {
+  description     = " Dev-Salary Instance ID"
+  type            = string
+  default         = "i-069d5031c2f20d32b"  # Instance ID of Salary-API
+}
+
+// Generate Key
+
+variable "private_key_algorithm" {
+  description = "value"
+  type = string
+  default = "RSA"
+}
+variable "private_key_rsa_bits" {
+  description = "value"
+  type = number
+  default = 4096
+}
+
+variable "instance_keypair" {
+  description     = "Launch Template Instance Type keypair name"
+  type            = string
+  default         = "Dev_Key"  
+}
