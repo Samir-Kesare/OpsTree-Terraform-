@@ -112,3 +112,23 @@ variable "nat_tags" {
     Owner = "harshit"
   }
 }
+
+/*--------------- # Route Table ---------------*/
+
+variable "public_route_table_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-public-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+variable "private_route_table_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-private-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
