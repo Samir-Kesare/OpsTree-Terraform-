@@ -117,7 +117,7 @@ resource "aws_lb_listener_rule" "path_rule" {
 
 // Create Auto Scaling group 
 
-resource "aws_autoscaling_group" "Frontend_asg" {
+resource "aws_autoscaling_group" "attendance_asg" {
   name                  = var.asg_name
   launch_template {
     id                  = aws_launch_template.Attendance_Launch_Template.id
@@ -133,6 +133,23 @@ resource "aws_autoscaling_group" "Frontend_asg" {
     key                 = var.tag_key
     value               = var.tag_value
     propagate_at_launch = var.propagate_at_launch  // doesn't specify tag to related resources(instances)
+  }
+}
+
+// ASG Policy 
+
+resource "aws_autoscaling_policy" "attendance_ASG_Policy" {
+  name                        = var.scaling_policy_name
+  autoscaling_group_name      = aws_autoscaling_group.attendance_asg.name
+  policy_type                 = var.policy_type
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = var.predefined_metric_type
+    }
+
+    target_value = var.target_value
+
   }
 }
 
