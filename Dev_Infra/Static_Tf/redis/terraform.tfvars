@@ -1,5 +1,5 @@
 vpc_id              = "vpc-0fa2ec828e8d79321"
-backend_sg_id       = "sg-06a217749b1a78f3e"
+backend_sg_id       = "sg-0fcb8711d080bf92d"
 openvpn_sg_id       = "sg-010b24b0750329970"
 management_vpc_cidr = "10.0.0.0/28"
 redis_port          = "6379"
