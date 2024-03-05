@@ -1,4 +1,4 @@
-# Security Group For Redis Servers #
+# Security Group For ScyllaDB Servers #
 
 resource "aws_security_group" "scylladb_sg" {
   name        = "ScyllaDB-sg"
