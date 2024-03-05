@@ -41,23 +41,3 @@ Sg_tags                 = {
     Owner         = "Shikha"
   }   
 *----------------------------------------------------------------------------------------------------------*
-alb_name = "dev-alb"
-internal_alb = false
-security_groups = ["sg-0c8d69907ebfa1305"]
-subnets = ["subnet-0a2270e6f508e903d", "subnet-06a5a25b82ec957cf"]
-
-listener_port = 80
-
-target_group_name = "dev-salary-tg"
-target_group_port = 80
-vpc_id = "vpc-0ebc6865d6c6a5460"
-
-health_check_path = "/actuator/health"
-health_check_port = "traffic-port"
-health_check_timeout = 5
-health_check_interval = 30
-health_check_healthy_threshold = 2
-health_check_unhealthy_threshold = 2
-
-listener_rule_priority = 100
-listener_rule_host_values = ["/api/v1/salary/"]
