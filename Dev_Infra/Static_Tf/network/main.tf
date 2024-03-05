@@ -97,3 +97,4 @@ resource "aws_route_table_association" "dev_private_route_association01" {
   route_table_id = aws_route_table.dev_private_rtb.id
   depends_on     = [aws_route_table.dev_private_rtb]
 }
+
