@@ -163,3 +163,53 @@ variable "health_check_unhealthy_threshold" {
 # }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+
+variable "alb_name" {
+  description     = "Name for the Application Load Balancer"
+  type            = string
+  default         = "Dev-ALB"
+}
+variable "internal" {
+  description     = "Boolean flag indicating whether the ALB is internal or external"
+  type            = bool
+  default         = false
+}
+variable "load_balancer_type" {
+  description     = "Type of the load balancer"
+  type            = string
+  default         = "application"
+}
+variable "security_groups" {
+  description     = "List of security group IDs for the ALB"
+  type            = list(string)
+  default         = ["sg-0b426399b2b19b0ae"]  # Frontend-lb-sg ID
+}
+variable "subnets" {
+  description     = "List of subnet IDs for the ALB"
+  type            = list(string)
+  default         = ["subnet-04c0c823118f48202", "subnet-02f5a2e8d5a787186"]  # Public subnet IDs 
+}
+
+# Create listener
+
+variable "alb_listener_port" {
+  description     = "ALB listener Port"
+  type            = number
+  default         = 80  
+}
+variable "alb_listener_protocol" {
+  description     = "ALB listener Protocol"
+  type            = string
+  default         = "HTTP"
+}
+variable "alb_listener_type" {
+  description     = "ALB listener Type"
+  type            = string
+  default         = "forward"
+}
+
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#

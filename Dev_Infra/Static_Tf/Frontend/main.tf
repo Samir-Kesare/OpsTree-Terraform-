@@ -111,3 +111,33 @@ resource "aws_lb_target_group" "Target_group" {
 
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+
+resource "aws_lb" "Dev_Alb" {
+  name               = var.alb_name
+  internal           = var.internal
+  load_balancer_type = var.load_balancer_type
+  security_groups    = var.security_groups
+  subnets            = var.subnets
+  tags = {
+    Name = var.alb_name
+  }
+}
+
+
+# Create listener
+
+resource "aws_lb_listener" "Listener" {
+  load_balancer_arn   = aws_lb.Dev_Alb.arn
+  port                = var.alb_listener_port
+  protocol            = var.alb_listener_protocol
+
+  default_action {
+    type              = var.alb_listener_type
+    target_group_arn  = aws_lb_target_group.Target_group.arn
+  }
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#

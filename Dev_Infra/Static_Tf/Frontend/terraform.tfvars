@@ -61,3 +61,21 @@ health_check_unhealthy_threshold  = 2
 # instance_ids                      = [ "i-0572a5faad61b261e" ]
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+
+alb_name                          = "Dev-ALB"
+internal                          = false
+load_balancer_type                = "application"
+security_groups                   = ["sg-0b426399b2b19b0ae"]      # Frontend-lb-sg ID
+subnets                           = ["subnet-04c0c823118f48202", "subnet-02f5a2e8d5a787186"]   # Public subnet IDs 
+
+# Create listener
+
+alb_listener_port                  = 80
+alb_listener_protocol              = "HTTP"
+alb_listener_type                  = "forward"
+
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
