@@ -213,3 +213,54 @@ variable "alb_listener_type" {
 
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+variable "autoscaling_group_name" {
+  description     = "The name of the Auto Scaling Group"
+  type            = string
+  default         = "Dev_Frontend_ASG"
+}
+
+variable "min_size" {
+  description     = "The minimum number of instances in the ASG"
+  type            = number
+  default         = 1
+}
+
+variable "max_size" {
+  description     = "The maximum number of instances in the ASG"
+  type            = number
+  default         = 2
+}
+
+variable "desired_capacity" {
+  description     = "The desired number of instances in the ASG"
+  type            = number
+  default         = 1
+}
+
+variable "subnet_ids" {
+  description     = "The list of subnet IDs where the instances will be launched"
+  type            = list(string)
+  default         = [ "subnet-04c0c823118f48202" ]    #Frontend-Pvt-Subnet ID
+}
+
+variable "tag_key" {
+  description     = "The key for the tag to be applied to the ASG and instances"
+  type            = string
+  default         = "Name"
+}
+
+variable "tag_value" {
+  description     = "The value for the tag to be applied to the ASG and instances"
+  type            = string
+  default         = "Dev_Frontend_ASG"
+}
+
+variable "propagate_at_launch" {
+  description     = "Whether the tag should be propagated to instances launched by the ASG"
+  type            = bool
+  default         = true
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
