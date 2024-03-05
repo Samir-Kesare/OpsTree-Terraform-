@@ -10,7 +10,7 @@ resource "aws_security_group" "scylladb_sg" {
     for_each = {
       "ssh_management" = var.management_vpc_cidr
       "ssh_openvpn"    = var.openvpn_sg_id
-      "redis_backend"  = var.backend_sg_id
+      "scylladb_backend"  = var.backend_sg_id
     }
     content {
       from_port       = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? 22 : var.scylladb_port
