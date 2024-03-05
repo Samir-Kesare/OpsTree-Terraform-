@@ -24,3 +24,22 @@ variable "ssh_port" {
   type        = string
   default     = "22"
 }
+variable "key_name" {
+  description = "Name of the SSH key pair"
+  type        = string
+}
+
+variable "redis_server_type" {
+  description = "Instance type for Redis server"
+  type        = string
+}
+
+variable "db_subnet_id" {
+  description = "ID of the subnet for the Redis server"
+  type        = string
+}
+
+variable "redis_name" {
+  description = "Name tag for the Redis server"
+  type        = string
+}
