@@ -13,8 +13,8 @@ resource "aws_security_group" "scylladb_sg" {
       "scylladb_backend"  = var.backend_sg_id
     }
     content {
-      from_port       = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? 22 : var.scylladb_port
-      to_port         = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? 22 : var.scylladb_port
+      from_port       = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? var.ssh_port : var.scylladb_port
+      to_port         = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? var.ssh_port : var.scylladb_port
       protocol        = ingress.value == var.management_vpc_cidr ? "tcp" : ingress.value == var.openvpn_sg_id ? "tcp" : "tcp"
       cidr_blocks     = ingress.value == var.management_vpc_cidr ? [ingress.value] : null
       security_groups = ingress.value == var.openvpn_sg_id ? [ingress.value] : ingress.value == var.backend_sg_id ? [ingress.value] : null
