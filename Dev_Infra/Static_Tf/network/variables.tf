@@ -137,7 +137,8 @@ variable "private_route_table_tags" {
   }
 }
 
-/*--------------- Frontend Subnet NACL ---------------*/
+/*--------------- Frontend NACL ---------------*/
+
 variable "frontend_nacl_ingress" {
   type    = list(object({
     rule_no = number
@@ -164,6 +165,72 @@ variable "frontend_nacl_tags" {
   type    = map(string)
   default = {
     Name = "dev-frontend-nacl-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+/*--------------- Backend NACL ---------------*/
+
+variable "backend_nacl_ingress" {
+  type    = list(object({
+    rule_no = number
+    protocol = string
+    cidr_block = string
+    from_port = number
+    to_port = number
+    action = string
+  }))
+}
+
+variable "backend_nacl_egress" {
+  type    = list(object({
+    rule_no = number
+    protocol = string
+    cidr_block = string
+    from_port = number
+    to_port = number
+    action = string
+  }))
+}
+
+variable "backend_nacl_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-backend-nacl-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+/*--------------- Database NACL ---------------*/
+
+variable "db_nacl_ingress" {
+  type    = list(object({
+    rule_no = number
+    protocol = string
+    cidr_block = string
+    from_port = number
+    to_port = number
+    action = string
+  }))
+}
+
+variable "db_nacl_egress" {
+  type    = list(object({
+    rule_no = number
+    protocol = string
+    cidr_block = string
+    from_port = number
+    to_port = number
+    action = string
+  }))
+}
+
+variable "db_nacl_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-db-nacl-01"
     Enviroment = "dev"
     Owner = "harshit"
   }

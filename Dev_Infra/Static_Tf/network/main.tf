@@ -98,7 +98,7 @@ resource "aws_route_table_association" "dev_private_route_association01" {
   depends_on     = [aws_route_table.dev_private_rtb]
 }
 
-/*--------------- Frontend Subnet NACL ---------------*/
+/*--------------- Frontend NACL ---------------*/
 
 resource "aws_network_acl" "dev_frontend_nacl" {
   vpc_id = aws_vpc.dev_vpc.id
@@ -126,4 +126,82 @@ resource "aws_network_acl" "dev_frontend_nacl" {
     }
   }
   tags = var.frontend_nacl_tags
+}
+/*--------------- Frontend NACL Subnet Association ---------------*/
+
+resource "aws_network_acl_association" "dev_frontend_nacl" {
+  network_acl_id = aws_network_acl.dev_frontend_nacl.id
+  subnet_id      = aws_subnet.dev_private_subnets[0].id
+}
+
+/*--------------- Backend NACL ---------------*/
+
+resource "aws_network_acl" "dev_backend_nacl" {
+  vpc_id = aws_vpc.dev_vpc.id
+
+  dynamic "ingress" {
+    for_each = var.backend_nacl_ingress
+    content {
+      protocol   = ingress.value.protocol
+      rule_no    = ingress.value.rule_no
+      action     = ingress.value.action
+      cidr_block = ingress.value.cidr_block
+      from_port  = ingress.value.from_port
+      to_port    = ingress.value.to_port
+    }
+  }
+  dynamic "egress" {
+    for_each = var.backend_nacl_egress
+    content {
+      protocol   = egress.value.protocol
+      rule_no    = egress.value.rule_no
+      action     = egress.value.action
+      cidr_block = egress.value.cidr_block
+      from_port  = egress.value.from_port
+      to_port    = egress.value.to_port
+    }
+  }
+  tags = var.backend_nacl_tags
+}
+/*--------------- Backend NACL Subnet Association ---------------*/
+
+resource "aws_network_acl_association" "dev_backend_nacl_assc" {
+  network_acl_id = aws_network_acl.dev_backend_nacl.id
+  subnet_id      = aws_subnet.dev_private_subnets[1].id
+}
+
+/*--------------- Database NACL ---------------*/
+
+resource "aws_network_acl" "dev_db_nacl" {
+  vpc_id = aws_vpc.dev_vpc.id
+
+  dynamic "ingress" {
+    for_each = var.db_nacl_ingress
+    content {
+      protocol   = ingress.value.protocol
+      rule_no    = ingress.value.rule_no
+      action     = ingress.value.action
+      cidr_block = ingress.value.cidr_block
+      from_port  = ingress.value.from_port
+      to_port    = ingress.value.to_port
+    }
+  }
+  dynamic "egress" {
+    for_each = var.db_nacl_egress
+    content {
+      protocol   = egress.value.protocol
+      rule_no    = egress.value.rule_no
+      action     = egress.value.action
+      cidr_block = egress.value.cidr_block
+      from_port  = egress.value.from_port
+      to_port    = egress.value.to_port
+    }
+  }
+  tags = var.db_nacl_tags
+}
+/*--------------- Database NACL Subnet Association ---------------*/
+
+resource "aws_network_acl_association" "dev_db_nacl_assc" {
+  network_acl_id = aws_network_acl.dev_db_nacl.id
+  subnet_id      = aws_subnet.dev_private_subnets[2].id
 }
