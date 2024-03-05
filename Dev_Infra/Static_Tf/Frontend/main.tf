@@ -132,7 +132,7 @@ resource "aws_lb" "Dev_Alb" {
 resource "aws_lb_listener" "Listener" {
   load_balancer_arn   = aws_lb.Dev_Alb.arn
   port                = var.alb_listener_port
-  protocol            = var.alb_listener_portocol
+  protocol            = var.alb_listener_protocol
 
   default_action {
     type              = var.alb_listener_type
