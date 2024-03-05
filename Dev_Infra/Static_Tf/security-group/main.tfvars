@@ -39,4 +39,19 @@ Sg_tags                 = {
     Name          = "salary-sg"
     Enviroment    = "dev"
     Owner         = "Shikha"
-  }   
+  }  
+
+*--------------------------------------------------------------------------------------------------*
+template_name = "Salary-Launch-Template"
+template_description = "Launch template for salary api"
+instance_type = "t2.micro"
+subnet_ID = "subnet-013843b2702f341f4"
+
+AMI_name = "Dev-Salary-AMI"
+AMI_Instance_ID = "i-069d5031c2f20d32b"
+
+private_key_algorithm = "RSA"
+private_key_rsa_bits = 4096
+
+instance_keypair = "Dev_Key"
+
