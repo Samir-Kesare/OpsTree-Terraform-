@@ -59,7 +59,7 @@ instance_keypair = "Dev_Key"
 // Target Group
 
 target_group_name = "Dev-Salary-TG"
-target_group_port = 80
+target_group_port = 8080
 target_group_protocol = "HTTP"
 TG_vpc_id = "vpc-0ebc6865d6c6a5460" // dev vpc id
 health_check_path = "/api/v1/salary/health"
