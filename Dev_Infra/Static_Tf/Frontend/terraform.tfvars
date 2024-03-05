@@ -42,3 +42,22 @@ instance_keypair        = "Dev_Key"
 subnet_ID               = "subnet-04c0c823118f48202"
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------------- Target Group -----------------------------------#
+
+target_group_name                 = "Dev-Frontend-TG"
+target_group_port                 = 3000
+target_group_protocol             = "HTTP"
+TG_vpc_id                         = "vpc-0383f4dc3af051efa"   #  Dev-VPC ID 
+health_check_path                 = "/health"
+health_check_port                 = "traffic-port"
+health_check_interval             = 30
+health_check_timeout              = 5
+health_check_healthy_threshold    = 2
+health_check_unhealthy_threshold  = 2
+
+
+# Attach instances to the target group
+
+# instance_ids                      = [ "i-0572a5faad61b261e" ]
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
