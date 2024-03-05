@@ -34,7 +34,6 @@ resource "aws_security_group" "security_group" {
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
 #--------------------------------Launch Template ----------------------------------#
 
-
 # First Create AMI for Template
 
 resource "aws_ami_from_instance" "AMI" {
@@ -60,21 +59,6 @@ resource "local_file" "private_key" {
   filename = "${var.instance_keypair}.pem"
 }
 
-
-# Cretae Launch Template
-
-resource "null_resource" "configure_template" {
-  # Trigger the provisioner whenever the ALB DNS name changes
-  triggers = {
-    alb_dns_name = aws_lb.Dev_Alb.dns_name
-  }
-
-  # ALB DNS name replaced in script.sh
-  provisioner "local-exec" {
-    command = "sed -i 's/{{ALB_DNS}}/${aws_lb.Dev_Alb.dns_name}/g' ./script.sh"
-  }
-}
-
 resource "aws_launch_template" "Template" {
   name                      = var.template_name
   description               = var.template_description
@@ -85,12 +69,11 @@ resource "aws_launch_template" "Template" {
     security_groups         = [aws_security_group.security_group.id]
     subnet_id               = var.subnet_ID 
   }
-  user_data = filebase64("./script.sh")
+  user_data = base64encode(templatefile("./script.sh", { ALB_DNS = aws_lb.Dev_Alb.dns_name }))
   tags = {  
     Name                  = var.template_name
   }
-  depends_on = [ aws_lb.Dev_Alb, null_resource.configure_template ]
-
+  depends_on = [ aws_lb.Dev_Alb ]
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
