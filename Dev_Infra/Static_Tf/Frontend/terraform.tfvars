@@ -91,3 +91,11 @@ tag_value                    = "Dev_Frontend_ASG"
 propagate_at_launch          = true
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#---------------------------- Auto Scaling Policies -------------------------------#
+
+scaling_policy_name         = "target-tracking-policy"
+policy_type                 = "TargetTrackingScaling"
+predefined_metric_type      = "ASGAverageCPUUtilization"
+target_value                = 50.0
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#

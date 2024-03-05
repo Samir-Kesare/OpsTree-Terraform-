@@ -55,3 +55,10 @@ output "Autoscaling_group_id" {
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#---------------------------- Auto Scaling Policies -------------------------------#
+
+output "Autoscaling_policy_name" {
+  value       = [aws_autoscaling_policy.Dev_ASG_Policy.name]
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
