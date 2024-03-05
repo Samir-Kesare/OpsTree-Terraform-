@@ -74,7 +74,7 @@ subnets                           = ["subnet-04c0c823118f48202", "subnet-02f5a2e
 # Create listener
 
 alb_listener_port                  = 80
-alb_listener_portocol              = "HTTP"
+alb_listener_protocol              = "HTTP"
 alb_listener_type                  = "forward"
 
 
