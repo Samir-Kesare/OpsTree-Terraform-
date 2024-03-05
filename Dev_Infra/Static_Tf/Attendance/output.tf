@@ -16,3 +16,22 @@ output "key_pair_name" {
 output "AMI_ID" {
     value = [aws_ami_from_instance.AMI.id] 
 }
+
+output "Target_group_id" {
+  value = [aws_lb_target_group.Target_group.id]
+}
+
+// ALB
+
+output "target_group_arn" {
+  value = [aws_lb_target_group.Target_group.arn]
+}
+
+output "ALB_arn" {
+  value = [aws_lb.Dev_attendance_Alb.arn] 
+}
+output "load_balancer_dns_name" {
+  value = [aws_lb.Dev_attendance_Alb.dns_name]
+}
+
+

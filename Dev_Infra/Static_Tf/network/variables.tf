@@ -35,8 +35,8 @@ variable "public_subnets_cidr" {
 
 variable "public_subnets_az" {
   description = "public subnet availability zones"
-  type        = string
-  default     = "us-east-2a"
+  type        = list(string)
+  default     = ["us-east-2a", "us-east-2b"]
 }
 variable "enable_map_public_ip_on_launch" {
   type    = bool
@@ -97,6 +97,37 @@ variable "igw_tags" {
   type    = map(string)
   default = {
     Name = "dev-igw-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+/*--------------- # NAT Gateway ---------------*/
+
+variable "nat_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-nat-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+/*--------------- # Route Table ---------------*/
+
+variable "public_route_table_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-public-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+
+variable "private_route_table_tags" {
+  type    = map(string)
+  default = {
+    Name = "dev-private-RTB-01"
     Enviroment = "dev"
     Owner = "harshit"
   }
