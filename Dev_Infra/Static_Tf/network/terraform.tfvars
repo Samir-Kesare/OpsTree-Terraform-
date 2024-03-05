@@ -50,3 +50,25 @@ igw_tags = {
     Enviroment = "dev"
     Owner = "harshit"
   }
+
+/*--------------- NAT Gateway ---------------*/
+
+nat_tags = {
+    Name = "dev-nat-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+
+/*--------------- # Route Table ---------------*/
+
+public_route_table_tags = {
+    Name = "dev-public-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+
+private_route_table_tags  = {
+    Name = "dev-private-RTB-01"
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
