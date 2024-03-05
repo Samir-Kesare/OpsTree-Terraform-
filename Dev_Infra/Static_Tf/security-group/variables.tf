@@ -152,7 +152,7 @@ variable "target_group_name" {
 variable "target_group_port" {
   description = "The port on which targets receive traffic"
   type        = number
-  default         = 80
+  default         = 8080
 }
 
 variable "target_group_protocol" {
