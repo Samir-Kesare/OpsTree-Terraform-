@@ -201,7 +201,7 @@ variable "alb_listener_port" {
   default         = 80  
 }
 variable "alb_listener_protocol" {
-  description     = "ALB listener Portocol"
+  description     = "ALB listener Protocol"
   type            = string
   default         = "HTTP"
 }
