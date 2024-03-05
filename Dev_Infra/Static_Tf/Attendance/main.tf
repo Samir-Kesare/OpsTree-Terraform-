@@ -117,7 +117,7 @@ resource "aws_lb_listener_rule" "path_rule" {
 
 // Create Auto Scaling group 
 
-resource "aws_autoscaling_group" "Frontend_asg" {
+resource "aws_autoscaling_group" "Attendance_asg" {
   name                  = var.asg_name
   launch_template {
     id                  = aws_launch_template.Attendance_Launch_Template.id
