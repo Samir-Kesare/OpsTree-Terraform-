@@ -55,7 +55,7 @@ variable "AMI_name" {
 variable "AMI_Instance_ID" {
   description     = "Give Dev-Employee Instance ID"
   type            = string
-  default         = "i-0e1e08aa641b7ed67"  # Dev-employee Instance ID
+  default         = "i-0143d498a6cbd06a6"  # Dev-employee Instance ID
 }
 
 # Key Generate
