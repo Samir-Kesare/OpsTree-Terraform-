@@ -40,3 +40,8 @@ output "load_balancer_dns_name" {
 output "Autoscaling_group_id" {
   value = [aws_autoscaling_group.Salary_asg.id]
 }
+// ASG POLICY
+
+output "Autoscaling_policy_name" {
+  value  = [aws_autoscaling_policy.Salary_ASG_Policy.name]
+}
