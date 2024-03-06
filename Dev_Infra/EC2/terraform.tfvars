@@ -9,7 +9,7 @@
  management_vpc_cidr = "10.0.0.0/28"
  Postgres_port       = "5432"
  ssh_port            = "22"
- key_name            = "tokyo.pem"
+ key_name            = "tokyokey.pem"
  Postgres_server_type   = "t2.medium"
  db_subnet_id        = "subnet-0dc05fffbacb821e8"
  Postgres_name       = "Postgres"
