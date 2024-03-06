@@ -11,7 +11,8 @@ resource "aws_security_group" "attendance_sg" {
       from_port   = ingress.value.port
       to_port     = ingress.value.port
       protocol    = ingress.value.protocol
-      cidr_blocks = [ingress.value.source]
+      cidr_blocks      = contains(keys(ingress.value), "source") ? [ingress.value.source] : null
+      security_groups  = contains(keys(ingress.value), "security_group_ids") ? [ingress.value.security_group_ids] : null
     }
   }
 
