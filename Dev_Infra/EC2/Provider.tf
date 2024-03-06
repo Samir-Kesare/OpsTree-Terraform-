@@ -1,4 +1,3 @@
-
 terraform {
   required_providers {
     aws = {
@@ -10,5 +9,5 @@ terraform {
 
 # Cloud Provider
 provider "aws" {
-  region = "ap-northeast-1"  
+  region = "us-east-1"  
 } 
