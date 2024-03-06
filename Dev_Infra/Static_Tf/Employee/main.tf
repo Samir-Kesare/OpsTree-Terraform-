@@ -71,9 +71,8 @@ resource "aws_launch_template" "Template" {
     security_groups         = [aws_security_group.security_group.id]
     subnet_id               = var.subnet_ID 
   }
-  user_data = base64encode(templatefile("./script.sh", { ALB_DNS = aws_lb.Dev_Alb.dns_name }))
+  user_data = filebase64("./script.sh")
   tags = {  
     Name                  = var.template_name
   }
-  depends_on = [ aws_lb.Dev_Alb ]
 }
