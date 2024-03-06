@@ -26,25 +26,21 @@ variable "vpc_id" {
 
 variable "inbound_rules" {
   description = "List of inbound rules for the security group"
-  type = list(object({
-    port     = number
-    source   = string
-    protocol = string
-  }))
+  type = list(map(any))
   default = [
     {
       port     = 22
-      source   = "20.0.0.0/28"   //cidr for management vpc 
+      cidr_blocks   = "20.0.0.0/28"   //cidr for management vpc 
       protocol = "tcp"  
     },
-    {
-      port     = 22
-      source   = "sg-0d407b10c0ca8fe22" // Replace it with OpenVPN-sg
-      protocol = "tcp"  
+   {
+     port     = 22
+     security_group_id = "sg-0de8c55c3ac6ca003" // Replace it with OpenVPN-sg
+     protocol = "tcp"  
     },
     {
       port     = 8080
-      source   = "0.0.0.0/0" // replace it with attendance-lb-sg
+      security_group_id   = "sg-0de8c55c3ac6ca003" // replace it with attendance-lb-sg
       protocol = "tcp"  
     }
   ]
