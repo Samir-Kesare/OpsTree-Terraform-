@@ -147,3 +147,21 @@ resource "aws_autoscaling_group" "Salary_asg" {
     propagate_at_launch = var.propagate_at_launch  // doesn't specify tag to related resources(instances)
   }
 }
+
+*----------------------------------------------------------------------------------------------------------*
+// ASG Policy 
+
+resource "aws_autoscaling_policy" "Salary_ASG_Policy" {
+  name                        = var.scaling_policy_name
+  autoscaling_group_name      = aws_autoscaling_group.Salary_asg.name
+  policy_type                 = var.policy_type
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = var.predefined_metric_type
+    }
+
+    target_value = var.target_value
+
+  }
+}
