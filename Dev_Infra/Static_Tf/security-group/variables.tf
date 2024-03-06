@@ -308,3 +308,26 @@ variable "propagate_at_launch" {
   type            = bool
   default         = false
 }
+
+// ASG Policy
+
+variable "scaling_policy_name" {
+  description     = "The name of the scaling policy"
+  type            = string
+  default         = "target-tracking-policy"
+}
+variable "policy_type" {
+  description     = "The type of adjustment to make"
+  type            = string
+  default         = "TargetTrackingScaling"
+}
+variable "predefined_metric_type" {
+  description     = "The predefined metric type for tracking"
+  type            = string
+  default         = "ASGAverageCPUUtilization"
+}
+variable "target_value" {
+  description     = "The target value for the predefined metric"
+  type            = number
+  default         = 50.0
+}
