@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('snaatak-aws-cred')
-        AWS_SECRET_ACCESS_KEY = credentials('snaatak-aws-cred')
+        AWS_ACCESS_KEY_ID     = credentials('Frontend Creds')
+        AWS_SECRET_ACCESS_KEY = credentials('Frontend Creds')
         TF_CLI_ARGS           = '-input=false'
     }
     
