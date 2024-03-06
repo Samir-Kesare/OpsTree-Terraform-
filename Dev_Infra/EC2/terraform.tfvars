@@ -1,37 +1,17 @@
 
-inbound_ports           = [
-    { port = 22, protocol = "tcp",cidr_blocks = "20.0.0.0/28" }, # Management VPC Cidr Block
-    { port = 5432, protocol = "tcp", cidr_blocks = "0.0.0.0/0" }, #  Backend-sg
-  ]
 
-outbound_ports          = [
-    { port = 0, protocol = "-1", cidr_blocks = "0.0.0.0/0", },
-  ]
-
-Security_group_tags      = {
-    Name          = "Postgres-sg"
-    Enviroment    = "dev"
-    Owner         = "Vikram"
-  }   
-
-#---------------------------------EC2 Instance ----------------------------------#
+#---------------------------------Security Group and EC2---------------------------------#
 
 
+ vpc_id              = "vpc-0a744f2efc4febb2a"
+ backend_sg_id       = "sg-0a4ecb0570e13e365"
+ openvpn_sg_id       = "sg-0ced15d988acdb94b"
+ management_vpc_cidr = "10.0.0.0/28"
+ Postgres_port       = "5432"
+ ssh_port            = "22"
+ key_name            = "tokyo.pem"
+ Postgres_server_type   = "t2.medium"
+ db_subnet_id        = "subnet-0dc05fffbacb821e8"
+ Postgres_name       = "Postgres"
+ ami_id =             "ami-07d9b9ddc6cd8dd30"
 
-aws_region     = "ap-northeast-1"
-instance_ami   = "ami-07c589821f2b353aa"
-instance_type  = "t2.medium"
-key_name       = "tokyo"
-private_subnet_cidr_block = "10.0.1.0/24"
-vpc_cidr_block = "10.0.0.0/16"
-availability_zone         = "ap-northeast-1a"
-private_subnet_name       = "DB-Pvt_Subnet"
-security_name = "Postgres_sg"
-vpc_id                  = "vpc-0fd6d3005998fb58c"
-vpc_name                  = "Dev-VPC"
-
-Postgres_Instance_tag      = {
-    Name          = "Postgres_Instance"
-    Enviroment    = "dev"
-    Owner         = "Vikram"
-  }
