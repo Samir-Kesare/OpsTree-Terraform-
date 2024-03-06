@@ -1,3 +1,6 @@
+#---------------------------------Security Group ----------------------------------#
+
+
 vpc_id              = "vpc-0a744f2efc4febb2a"
 backend_sg_id       = "sg-0a4ecb0570e13e365"
 openvpn_sg_id       = "sg-0ced15d988acdb94b"
