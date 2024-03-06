@@ -308,7 +308,7 @@ variable "elb_type" {
 }
 variable "alb_deletion_protection" {
   type = bool
-  default = true
+  default = false
 }
 variable "alb_tags" {
   type    = map(string)
