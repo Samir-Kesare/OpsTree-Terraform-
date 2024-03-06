@@ -30,7 +30,7 @@ variable "inbound_rules" {
   default = [
     {
       port     = 22
-      cidr_blocks   = "20.0.0.0/28"   //cidr for management vpc 
+      source   = "20.0.0.0/28"   //cidr for management vpc 
       protocol = "tcp"  
     },
    {
