@@ -1,33 +1,31 @@
+# Security Group For Postgres Servers #
 
-#---------------------------------Security Group ----------------------------------#
+resource "aws_security_group" "Postgresql_sg" {
+  name        = "Postgresql_sg"
+  description = "Security group for Postgresql DB Servers"
 
-locals {
-  inbound_ports         = var.inbound_ports
-  outbound_ports        = var.outbound_ports
-}
-resource "aws_security_group" "Security_group" {
-  name                  = var.security_name
-  description           = var.Security_description
-  vpc_id                = var.vpc_id
+  vpc_id = var.vpc_id
 
   dynamic "ingress" {
-  for_each              = local.inbound_ports
-  content {
-   from_port            = ingress.value.port
-   to_port              = ingress.value.port
-   protocol             = ingress.value.protocol
-   cidr_blocks          = [ingress.value.cidr_blocks]
+    for_each = {
+      "ssh_management" = var.management_vpc_cidr
+      "ssh_openvpn"    = var.openvpn_sg_id
+      "Postgres_backend"  = var.backend_sg_id
+      
+    }
+    content {
+      from_port       = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? 22 : var.Postgres_port
+      to_port         = ingress.value == var.management_vpc_cidr ? var.ssh_port : ingress.value == var.openvpn_sg_id ? 22 : var.Postgres_port
+      protocol        = ingress.value == var.management_vpc_cidr ? "tcp" : ingress.value == var.openvpn_sg_id ? "tcp" : "tcp"
+      cidr_blocks     = ingress.value == var.management_vpc_cidr ? [ingress.value] : null
+      security_groups = ingress.value == var.openvpn_sg_id ? [ingress.value] : ingress.value == var.backend_sg_id ? [ingress.value] : null
+    }
   }
- }
- dynamic "egress" {
-  for_each              = local.outbound_ports
-  content {
-   from_port            = egress.value.port
-   to_port              = egress.value.port
-   protocol             = egress.value.protocol
-   cidr_blocks          = [egress.value.cidr_blocks]
-  }
- }
-  tags                  = var.Security_group_tags
-}
 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
