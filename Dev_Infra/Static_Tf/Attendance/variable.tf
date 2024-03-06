@@ -35,12 +35,12 @@ variable "inbound_rules" {
     },
    {
      port     = 22
-     security_group_id = "sg-0de8c55c3ac6ca003" // Replace it with OpenVPN-sg
+     security_group_ids = "sg-0de8c55c3ac6ca003" // Replace it with OpenVPN-sg
      protocol = "tcp"  
     },
     {
       port     = 8080
-      security_group_id   = "sg-0de8c55c3ac6ca003" // replace it with attendance-lb-sg
+      security_group_ids   = "sg-0de8c55c3ac6ca003" // replace it with attendance-lb-sg
       protocol = "tcp"  
     }
   ]
