@@ -339,7 +339,7 @@ alb_sg_tags = {
 
 /*--------------- ALB ---------------*/
 
- alb_deletion_protection = true
+ alb_deletion_protection = false
  alb_name = "dev-alb"
  elb_type = "application"
  alb_internal = false

@@ -46,3 +46,10 @@ output "alb-sg-id" {
 output "dev-alb-dns" {
   value = aws_lb.dev_alb.dns_name
 }
+
+output "dev-route53_zone_ns" {
+  value = aws_route53_zone.dev_route53_zone.name_servers
+}
+output "dev-route53-record" {
+  value = aws_route53_record.dev_route53_record.name
+}

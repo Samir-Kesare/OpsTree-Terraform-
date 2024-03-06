@@ -317,3 +317,17 @@ variable "alb_tags" {
     Owner = "harshit"
   }
 }
+
+/*--------------- Route 53 ---------------*/
+
+variable "route53_zone_tags" {
+  type    = map(string)
+  default = {
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+}
+variable "route53_zone_name" {
+  type = string
+  default = "example.com"
+}
