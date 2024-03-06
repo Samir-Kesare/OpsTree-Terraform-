@@ -33,3 +33,10 @@ output "ALB_arn" {
 output "load_balancer_dns_name" {
   value = [aws_lb.Dev_Alb]
 }
+
+*------------------------------------------------------------------------------------------------------------*
+
+// ASG
+output "Autoscaling_group_id" {
+  value = [aws_autoscaling_group.Salary_asg.id]
+}
