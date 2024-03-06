@@ -347,3 +347,11 @@ alb_sg_tags = {
     Enviroment = "dev"
     Owner = "harshit"
   }
+
+  /*--------------- Route 53 ---------------*/
+
+route53_zone_tags = {
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+route53_zone_name = "example.com"
