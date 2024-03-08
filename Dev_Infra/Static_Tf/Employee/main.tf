@@ -32,3 +32,47 @@ resource "aws_security_group" "security_group" {
  }
   tags                  = var.Sg_tags
 }
+
+
+#--------------------------------Launch Template ----------------------------------#
+
+# First Create AMI for Template
+
+resource "aws_ami_from_instance" "AMI" {
+  name               = var.AMI_name
+  source_instance_id = var.AMI_Instance_ID
+}
+
+# Generate Private Key
+resource "tls_private_key" "private_key" {
+  algorithm = var.private_key_algorithm
+  rsa_bits  = var.private_key_rsa_bits
+}
+
+# Generate SSH Key Pair
+resource "aws_key_pair" "key_pair" {
+  key_name   = var.instance_keypair
+  public_key = tls_private_key.private_key.public_key_openssh
+}
+
+# Download Private Key in PEM Format
+resource "local_file" "private_key" {
+  content  = tls_private_key.private_key.private_key_pem
+  filename = "${var.instance_keypair}.pem"
+}
+
+resource "aws_launch_template" "Template" {
+  name                      = var.template_name
+  description               = var.template_description
+  image_id                  = aws_ami_from_instance.AMI.id         # if your AMI alreday created then give your AMI ID
+  instance_type             = var.instance_type
+  key_name                  = aws_key_pair.key_pair.key_name
+  network_interfaces {
+    security_groups         = [aws_security_group.security_group.id]
+    subnet_id               = var.subnet_ID 
+  }
+  user_data = filebase64("./script.sh")
+  tags = {  
+    Name                  = var.template_name
+  }
+}
