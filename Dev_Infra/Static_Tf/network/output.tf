@@ -26,3 +26,23 @@ output "dev-public-RTB-id" {
 output "dev-private-RTB-id" {
   value = aws_route_table.dev_private_rtb.id
 }
+
+output "dev-frontend-nacl-id" {
+  value = aws_network_acl.dev_frontend_nacl.id
+}
+
+output "dev-backend-nacl-id" {
+  value = aws_network_acl.dev_backend_nacl.id
+}
+
+output "dev-db-nacl-id" {
+  value = aws_network_acl.dev_db_nacl.id
+}
+
+output "alb-sg-id" {
+  value = aws_security_group.dev_alb_sg.id  
+}
+
+output "dev-alb-dns" {
+  value = aws_lb.dev_alb.dns_name
+}
