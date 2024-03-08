@@ -241,7 +241,7 @@ variable "desired_capacity" {
 variable "subnet_ids" {
   description     = "The list of subnet IDs where the instances will be launched"
   type            = list(string)
-  default         = [ "subnet-0ee90c13919484fb8" ]    #Attendance-Pvt-Subnet ID
+  default         = [ "subnet-0a712151efeb16f4f" ]    #Attendance-Pvt-Subnet ID
 }
 
 variable "tag_key" {
