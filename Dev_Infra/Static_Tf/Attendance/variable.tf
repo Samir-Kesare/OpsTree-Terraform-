@@ -21,7 +21,7 @@ variable "description" {
 variable "vpc_id" {
   description = "The ID of the VPC"
   type = string
-  default = "vpc-0a744f2efc4febb2a"
+  default = "vpc-0d744158f7f47f419"
 }
 
 variable "inbound_rules" {
@@ -35,12 +35,12 @@ variable "inbound_rules" {
     },
    {
      port     = 22
-     security_group_ids = "sg-0ced15d988acdb94b" // Replace it with OpenVPN-sg
+     security_group_ids = "sg-0add0279237c66ee0" // Replace it with OpenVPN-sg
      protocol = "tcp"  
     },
     {
       port     = 8080
-      security_group_ids   = "sg-04d283934a64707a5" // replace it with attendance-lb-sg
+      security_group_ids   = "sg-0add0279237c66ee0" // replace it with attendance-lb-sg
       protocol = "tcp"  
     }
   ]
@@ -94,7 +94,7 @@ variable "instance_type" {
 variable "subnet_ID" {
   description = "The ID of the subnet"
   type        = string
-  default     = "subnet-0e01736fe7c278323"
+  default     = "subnet-0a712151efeb16f4f"
 }
 
 
@@ -108,7 +108,7 @@ variable "AMI_name" {
 variable "AMI_Instance_ID" {
   description     = "Give Dev-Attendance Instance ID"
   type            = string
-  default         = "i-0d88ea4d45a32ff3e"  # Instance ID of Attendance-API
+  default         = "i-019f7170b97a143c7"  # Instance ID of Attendance-API
 }
 
 // Generate Key
@@ -153,7 +153,7 @@ variable "target_group_protocol" {
 variable "TG_vpc_id" {
   description = "The VPC ID"
   type        = string
-  default         = "vpc-0a744f2efc4febb2a" // dev vpc id
+  default         = "vpc-0d744158f7f47f419" // dev vpc id
 }
 
 variable "health_check_path" {
@@ -197,7 +197,7 @@ variable "health_check_unhealthy_threshold" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = "arn:aws:elasticloadbalancing:us-east-1:533267160240:listener/app/Dev-ALB/e7db9e384a0d3b57/9328f434b5c51530"
+  default = "arn:aws:elasticloadbalancing:us-east-1:905418193488:listener/app/alb-heh/127dfdd55a957475/99ac24ae778e4e38"
 }
 
 variable "path_pattern" {
@@ -210,12 +210,6 @@ variable "action_type" {
   description = "Path pattern for the listener rule"
   type        = string
   default     = "forward"
-}
-
-variable "target_group_arn" {
-  description = "ARN of the target group"
-  type        = string
-  default     = "arn:aws:elasticloadbalancing:us-east-1:533267160240:targetgroup/frontend-tg/ca940a625b09acda"
 }
 
 // ASG 
