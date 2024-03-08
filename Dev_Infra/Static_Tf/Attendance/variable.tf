@@ -3,7 +3,7 @@
 // AWS region in provider.tf
 variable "region" {
   description = "AWS region"
-  default     = "ap-northeast-1"
+  default     = "us-east-1"
 }
 
 variable "security_group_name" {
@@ -21,7 +21,7 @@ variable "description" {
 variable "vpc_id" {
   description = "The ID of the VPC"
   type = string
-  default = "vpc-0d744158f7f47f419"
+  default = "vpc-0a744f2efc4febb2a"
 }
 
 variable "inbound_rules" {
@@ -35,12 +35,12 @@ variable "inbound_rules" {
     },
    {
      port     = 22
-     security_group_ids = "sg-0de8c55c3ac6ca003" // Replace it with OpenVPN-sg
+     security_group_ids = "sg-0ced15d988acdb94b" // Replace it with OpenVPN-sg
      protocol = "tcp"  
     },
     {
       port     = 8080
-      security_group_ids   = "sg-0de8c55c3ac6ca003" // replace it with attendance-lb-sg
+      security_group_ids   = "sg-04d283934a64707a5" // replace it with attendance-lb-sg
       protocol = "tcp"  
     }
   ]
@@ -108,7 +108,7 @@ variable "AMI_name" {
 variable "AMI_Instance_ID" {
   description     = "Give Dev-Attendance Instance ID"
   type            = string
-  default         = "i-0572a5faad61b261e"  # Instance ID of Attendance-API
+  default         = "i-0d88ea4d45a32ff3e"  # Instance ID of Attendance-API
 }
 
 // Generate Key
@@ -127,7 +127,7 @@ variable "private_key_rsa_bits" {
 variable "instance_keypair" {
   description     = "Launch Template Instance Type keypair name"
   type            = string
-  default         = "Dev_Key"  
+  default         = "Dev_Key_attendence"  
 }
 
 // Target groups 
@@ -153,7 +153,7 @@ variable "target_group_protocol" {
 variable "TG_vpc_id" {
   description = "The VPC ID"
   type        = string
-  default         = "vpc-0383f4dc3af051efa" // dev vpc id
+  default         = "vpc-0a744f2efc4febb2a" // dev vpc id
 }
 
 variable "health_check_path" {
