@@ -23,15 +23,9 @@ output "Target_group_id" {
 
 // ALB
 
-output "target_group_arn" {
-  value = [aws_lb_target_group.Target_group.arn]
-}
+//output "target_group_arn" {
+//  value = [aws_lb_target_group.Target_group.arn]
+//}
 
-output "ALB_arn" {
-  value = [aws_lb.Dev_attendance_Alb.arn] 
-}
-output "load_balancer_dns_name" {
-  value = [aws_lb.Dev_attendance_Alb.dns_name]
-}
 
 
