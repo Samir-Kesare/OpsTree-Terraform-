@@ -23,9 +23,9 @@ output "Target_group_id" {
 
 // ALB
 
-//output "target_group_arn" {
-//  value = [aws_lb_target_group.Target_group.arn]
-//}
+output "target_group_arn" {
+  value = [aws_lb_target_group.Target_group.arn]
+}
 
 
 
