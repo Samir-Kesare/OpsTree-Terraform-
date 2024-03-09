@@ -82,7 +82,8 @@ variable "Sg_tags" {
     Owner         = "Shikha"
   }
 }
-*-------------------------------------------------------------------------------------------------------------*
+
+*-------------------------------------------------------------------------------------------------*
 // launch template
 variable "template_name" {
   description = "The name of the launch template"
@@ -203,6 +204,7 @@ variable "health_check_unhealthy_threshold" {
   type        = number
   default     = 2
 }
+
 # Configure ALB
 
 variable "alb_name" {
@@ -257,3 +259,4 @@ variable "target_group_arn" {
   type        = string
   default     = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
 }
+
