@@ -42,6 +42,11 @@ Sg_tags                 = {
   }   
 *----------------------------------------------------------------------------------------------------------*
 // Lunch Template
+
+
+*----------------------------------------------------------------------------------------------------------*
+
+
 template_name = "Salary-Launch-Template"
 template_description = "Launch template for salary api"
 instance_type = "t2.micro"
@@ -60,6 +65,10 @@ instance_keypair = "Dev_Key"
 
 target_group_name = "Dev-Salary-TG"
 target_group_port = 8080
+
+*---------------------------------------------------------------------------------------------------------*
+target_group_name = "Dev-Salary-TG"
+target_group_port = 80
 target_group_protocol = "HTTP"
 TG_vpc_id = "vpc-0ebc6865d6c6a5460" // dev vpc id
 health_check_path = "/api/v1/salary/health"

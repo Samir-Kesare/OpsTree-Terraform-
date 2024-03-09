@@ -82,7 +82,7 @@ variable "Sg_tags" {
     Owner         = "Shikha"
   }
 }
-*--------------------------------------------------------------------------------------------------*
+*-------------------------------------------------------------------------------------------------------------*
 // launch template
 variable "template_name" {
   description = "The name of the launch template"
@@ -141,6 +141,7 @@ variable "instance_keypair" {
   default         = "Dev_Key"  
 }
 
+*-------------------------------------------------------------------------------------------------------*
 // Target groups 
 
 variable "target_group_name" {
@@ -153,6 +154,7 @@ variable "target_group_port" {
   description = "The port on which targets receive traffic"
   type        = number
   default         = 8080
+  default         = 80
 }
 
 variable "target_group_protocol" {
@@ -201,7 +203,6 @@ variable "health_check_unhealthy_threshold" {
   type        = number
   default     = 2
 }
-
 # Configure ALB
 
 variable "alb_name" {
