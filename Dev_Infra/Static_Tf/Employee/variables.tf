@@ -154,3 +154,59 @@ variable "health_check_unhealthy_threshold" {
 }
 
 
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+
+variable "alb_name" {
+  description     = "Name for the Application Load Balancer"
+  type            = string
+  default         = "Dev-ALB"
+}
+variable "internal" {
+  description     = "Boolean flag indicating whether the ALB is internal or external"
+  type            = bool
+  default         = false
+}
+variable "load_balancer_type" {
+  description     = "Type of the load balancer"
+  type            = string
+  default         = "application"
+}
+variable "security_groups" {
+  description     = "List of security group IDs for the ALB"
+  type            = list(string)
+  default         = ["sg-04b7eb5f6320a1aa6"]  # Employee-lb-sg ID
+}
+variable "subnets" {
+  description     = "List of subnet IDs for the ALB"
+  type            = list(string)
+  default         = ["subnet-0abcfc7a31b6687b4", "subnet-00ee15fe21368650e"]  # Public subnet IDs 
+}
+
+
+// Listener rule
+
+variable "listener_arn" {
+  description = "ARN of the existing listener where the rule will be added"
+  type        = string
+  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/emp-api/a61683d67e0df893/ef65b9dfea7edce6"
+}
+
+variable "path_pattern" {
+  description = "Path pattern for the listener rule"
+  type        = string
+  default     = "/api/v1/employee/*"
+}
+
+variable "action_type" {
+  description = "Path pattern for the listener rule"
+  type        = string
+  default     = "forward"
+}
+
+variable "target_group_arn" {
+  description = "ARN of the target group"
+  type        = string
+  default     = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:targetgroup/Dev-Employee-TG/efbd475456f84803"
+}
