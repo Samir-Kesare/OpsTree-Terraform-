@@ -10,7 +10,7 @@ ingress_rules = [
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["sg-0367a02ed8f7d5565"] //Dev-Salary-lb-sg ID
+    cidr_blocks = ["sg-09132d5dee9e5e106"] //Dev-Salary-lb-sg ID
   },
   {
     from_port   = 22
@@ -40,10 +40,9 @@ Sg_tags                 = {
     Enviroment    = "dev"
     Owner         = "Shikha"
 
-  }  
-
-*--------------------------------------------------------------------------------------------------*
-
+  }   
+*----------------------------------------------------------------------------------------------------------*
+// Lunch Template
 template_name = "Salary-Launch-Template"
 template_description = "Launch template for salary api"
 instance_type = "t2.micro"
@@ -57,6 +56,12 @@ private_key_rsa_bits = 4096
 
 instance_keypair = "Dev_Key"
 
+*----------------------------------------------------------------------------------------------------------*
+// Target Group
+
+target_group_name = "Dev-Salary-TG"
+target_group_port = 8080
+
 *---------------------------------------------------------------------------------------------------------*
 target_group_name = "Dev-Salary-TG"
 target_group_port = 80
@@ -68,4 +73,20 @@ health_check_interval = 30
 health_check_timeout = 5
 health_check_healthy_threshold = 5
 health_check_unhealthy_threshold = 2
+
+*--------------------------------------------------------------------------------------------------------*
+//ALB
+
+alb_name = "Dev-ALB"
+internal = false
+load_balancer_type = "application"
+security_groups = ["sg-09132d5dee9e5e106"]  # Salary-lb-sg ID
+subnets = ["subnet-0a2270e6f508e903d", "subnet-06a5a25b82ec957cf"]  # Public subnet IDs
+
+*--------------------------------------------------------------------------------------------------------------*
+// Listener Rule
+listener_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:listener/app/ALB/49e9e7b843170b35/85a562da2e108bf6"
+path_pattern = "/api/v1/salary/*"
+action_type = "forward"
+target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
 
