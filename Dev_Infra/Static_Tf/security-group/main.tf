@@ -95,7 +95,6 @@ resource "aws_lb_target_group" "Target_group" {
     Name = var.target_group_name
   }
 }
-
 # Configure ALB
 
 resource "aws_lb" "Dev_Alb" {
@@ -146,6 +145,24 @@ resource "aws_autoscaling_group" "Salary_asg" {
     key                 = var.tag_key
     value               = var.tag_value
     propagate_at_launch = var.propagate_at_launch  // doesn't specify tag to related resources(instances)
+  }
+}
+
+*----------------------------------------------------------------------------------------------------------*
+// ASG Policy 
+
+resource "aws_autoscaling_policy" "Salary_ASG_Policy" {
+  name                        = var.scaling_policy_name
+  autoscaling_group_name      = aws_autoscaling_group.Salary_asg.name
+  policy_type                 = var.policy_type
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = var.predefined_metric_type
+    }
+
+    target_value = var.target_value
+
   }
 }
 

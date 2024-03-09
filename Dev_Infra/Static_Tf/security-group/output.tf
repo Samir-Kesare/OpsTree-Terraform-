@@ -42,6 +42,12 @@ output "Autoscaling_group_id" {
   value = [aws_autoscaling_group.Salary_asg.id]
 }
 
+// ASG POLICY
+
+output "Autoscaling_policy_name" {
+  value  = [aws_autoscaling_policy.Salary_ASG_Policy.name]
+}
+
 *-----------------------------------------------------------------------------------------------------------*
 output "Target_group_id" {
   value = [aws_lb_target_group.Target_group.id]

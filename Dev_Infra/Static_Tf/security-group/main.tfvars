@@ -74,7 +74,6 @@ health_check_timeout = 5
 health_check_healthy_threshold = 5
 health_check_unhealthy_threshold = 2
 
-
 *--------------------------------------------------------------------------------------------------------*
 //ALB
 
