@@ -27,3 +27,19 @@ output "launch_template_id" {
 output "Target_group_id" {
   value = [aws_lb_target_group.Target_group.id]
 }
+
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+output "ALB_arn" {
+  value = [aws_lb.Dev_Alb.arn] 
+}
+output "load_balancer_dns_name" {
+  value = [aws_lb.Dev_Alb.dns_name]
+}
+
+# Listener
+output "Listener_arn" {
+  value = [aws_lb_listener.Listener.arn]
+}
+
