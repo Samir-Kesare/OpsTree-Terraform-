@@ -39,8 +39,8 @@ Sg_tags                 = {
     Name          = "salary-sg"
     Enviroment    = "dev"
     Owner         = "Shikha"
-  }   
 
+  }   
 *----------------------------------------------------------------------------------------------------------*
 // Lunch Template
 template_name = "Salary-Launch-Template"

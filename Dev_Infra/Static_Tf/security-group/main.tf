@@ -27,7 +27,8 @@ resource "aws_security_group" "salary_sg" {
   // Tags for the security group
    tags                  = var.Sg_tags
 }
-*---------------------------------------------------------------------------------------------------------*
+
+*---------------------------------------------------------------------------------------*
 // Create AWS AMI from Instance
 resource "aws_ami_from_instance" "AMI" {
   name               = var.AMI_name
@@ -147,3 +148,4 @@ resource "aws_autoscaling_group" "Salary_asg" {
     propagate_at_launch = var.propagate_at_launch  // doesn't specify tag to related resources(instances)
   }
 }
+

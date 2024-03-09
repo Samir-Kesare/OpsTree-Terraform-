@@ -41,6 +41,7 @@ output "load_balancer_dns_name" {
 output "Autoscaling_group_id" {
   value = [aws_autoscaling_group.Salary_asg.id]
 }
+
 *-----------------------------------------------------------------------------------------------------------*
 output "Target_group_id" {
   value = [aws_lb_target_group.Target_group.id]

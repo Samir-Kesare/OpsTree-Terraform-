@@ -83,7 +83,8 @@ variable "Sg_tags" {
   }
 }
 
-*--------------------------------------------------------------------------------------------------*
+
+*-------------------------------------------------------------------------------------------------*
 // launch template
 variable "template_name" {
   description = "The name of the launch template"
@@ -259,8 +260,6 @@ variable "target_group_arn" {
   type        = string
   default     = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
 }
-
-*--------------------------------------------------------------------------------------------------------*
 
 // ASG 
 
