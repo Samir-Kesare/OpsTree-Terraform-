@@ -22,3 +22,4 @@ output "AMI_ID" {
 output "Target_group_id" {
   value = [aws_lb_target_group.Target_group.id]
 }
+

@@ -82,7 +82,8 @@ variable "Sg_tags" {
     Owner         = "Shikha"
   }
 }
-*-------------------------------------------------------------------------------------------------------------*
+
+*-------------------------------------------------------------------------------------------------*
 // launch template
 variable "template_name" {
   description = "The name of the launch template"
@@ -202,3 +203,4 @@ variable "health_check_unhealthy_threshold" {
   type        = number
   default     = 2
 }
+

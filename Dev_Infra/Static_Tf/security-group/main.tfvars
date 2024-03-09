@@ -39,9 +39,10 @@ Sg_tags                 = {
     Name          = "salary-sg"
     Enviroment    = "dev"
     Owner         = "Shikha"
-  }   
 
-*----------------------------------------------------------------------------------------------------------*
+  }  
+
+*--------------------------------------------------------------------------------------------------*
 
 template_name = "Salary-Launch-Template"
 template_description = "Launch template for salary api"
@@ -55,6 +56,7 @@ private_key_algorithm = "RSA"
 private_key_rsa_bits = 4096
 
 instance_keypair = "Dev_Key"
+
 *---------------------------------------------------------------------------------------------------------*
 target_group_name = "Dev-Salary-TG"
 target_group_port = 80
@@ -66,3 +68,4 @@ health_check_interval = 30
 health_check_timeout = 5
 health_check_healthy_threshold = 5
 health_check_unhealthy_threshold = 2
+
