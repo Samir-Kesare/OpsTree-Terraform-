@@ -83,6 +83,7 @@ variable "Sg_tags" {
   }
 }
 
+
 *-------------------------------------------------------------------------------------------------*
 // launch template
 variable "template_name" {
@@ -258,5 +259,55 @@ variable "target_group_arn" {
   description = "ARN of the target group"
   type        = string
   default     = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
+}
+
+// ASG 
+
+variable "asg_name" {
+  description     = "The name of the Auto Scaling Group"
+  type            = string
+  default         = "Dev_Salary_ASG"
+}
+
+variable "min_size" {
+  description     = "The minimum number of instances in the ASG"
+  type            = number
+  default         = 1
+}
+
+variable "max_size" {
+  description     = "The maximum number of instances in the ASG"
+  type            = number
+  default         = 2
+}
+
+variable "desired_capacity" {
+  description     = "The desired number of instances in the ASG"
+  type            = number
+  default         = 1
+}
+
+variable "subnet_ids" {
+  description     = "The list of subnet IDs where the instances will be launched"
+  type            = list(string)
+  default         = [ "subnet-013843b2702f341f4" ]    #Salary-Pvt-Subnet ID
+}
+
+variable "tag_key" {
+  description     = "The key for the tag to be applied to the ASG and instances"
+  type            = string
+  default         = "Name"
+}
+
+variable "tag_value" {
+  description     = "The value for the tag to be applied to the ASG and instances"
+  type            = string
+  default         = "Dev_Salary_ASG"
+}
+
+variable "propagate_at_launch" {
+  description     = "Whether the tag should be propagated to instances launched by the ASG"
+  type            = bool
+  default         = false
 }
 

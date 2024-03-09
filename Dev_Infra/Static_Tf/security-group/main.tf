@@ -126,5 +126,26 @@ resource "aws_lb_listener_rule" "path_rule" {
   }
 }
 
+*--------------------------------------------------------------------------------------------------------*
 
+// Create Auto Scaling group 
+
+resource "aws_autoscaling_group" "Salary_asg" {
+  name                  = var.asg_name
+  launch_template {
+    id                  = aws_launch_template.Salary_Launch_Template.id
+  }
+  min_size              = var.min_size
+  max_size              = var.max_size
+  desired_capacity      = var.desired_capacity
+  vpc_zone_identifier   = var.subnet_ids
+  target_group_arns     = [
+    aws_lb_target_group.Target_group.arn
+  ]
+  tag {
+    key                 = var.tag_key
+    value               = var.tag_value
+    propagate_at_launch = var.propagate_at_launch  // doesn't specify tag to related resources(instances)
+  }
+}
 
