@@ -39,3 +39,9 @@ output "target_group_arn" {
 output "Autoscaling_group_id" {
   value = [aws_autoscaling_group.Employee_asg.id]
 }
+
+#---------------------------- Auto Scaling Policies -------------------------------#
+
+output "Autoscaling_policy_name" {
+  value       = [aws_autoscaling_policy.Dev_ASG_Policy.name]
+}
