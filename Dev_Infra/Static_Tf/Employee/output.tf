@@ -21,3 +21,9 @@ output "key_pair_name" {
 output "launch_template_id" {
   value = [aws_launch_template.Template.id]
 }
+
+#--------------------------------- Target Group -----------------------------------#
+
+output "Target_group_id" {
+  value = [aws_lb_target_group.Target_group.id]
+}
