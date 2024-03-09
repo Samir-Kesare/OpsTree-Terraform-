@@ -39,8 +39,8 @@ Sg_tags                 = {
     Name          = "salary-sg"
     Enviroment    = "dev"
     Owner         = "Shikha"
-  }   
 
+  }   
 *----------------------------------------------------------------------------------------------------------*
 // Lunch Template
 template_name = "Salary-Launch-Template"
@@ -55,6 +55,7 @@ private_key_algorithm = "RSA"
 private_key_rsa_bits = 4096
 
 instance_keypair = "Dev_Key"
+
 *----------------------------------------------------------------------------------------------------------*
 // Target Group
 
@@ -88,3 +89,4 @@ listener_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:listener/app
 path_pattern = "/api/v1/salary/*"
 action_type = "forward"
 target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
+
