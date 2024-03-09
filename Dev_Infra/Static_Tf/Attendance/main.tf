@@ -1,46 +1,47 @@
-// Create AWS security group
-resource "aws_security_group" "salary_sg" {
+// RESOURCES
+
+resource "aws_security_group" "attendance_sg" {
   name        = var.security_group_name
-  description = var.security_group_description
+  description = var.description
   vpc_id      = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_rules
+    for_each = var.inbound_rules
     content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
       protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
+      cidr_blocks      = contains(keys(ingress.value), "source") ? [ingress.value.source] : null
+      security_groups  = contains(keys(ingress.value), "security_group_ids") ? [ingress.value.security_group_ids] : null
     }
   }
 
   dynamic "egress" {
-    for_each = var.egress_rules
+    for_each = var.outbound_rules
     content {
-      from_port   = egress.value.from_port
-      to_port     = egress.value.to_port
-      protocol    = egress.value.protocol
-      cidr_blocks = egress.value.cidr_blocks
+      from_port       = egress.value.port
+      to_port         = egress.value.port
+      protocol        = egress.value.protocol
+      cidr_blocks     = [egress.value.source]
     }
   }
-
-  // Tags for the security group
-   tags                  = var.Sg_tags
+  tags = var.sg_tags
 }
-*---------------------------------------------------------------------------------------------------------*
-// Create AWS AMI from Instance
+
+// AMI 
 resource "aws_ami_from_instance" "AMI" {
   name               = var.AMI_name
   source_instance_id = var.AMI_Instance_ID
 }
 
-// Generate SSH Key Pair
+
+// Private Key
 resource "tls_private_key" "private_key" {
   algorithm = var.private_key_algorithm
   rsa_bits  = var.private_key_rsa_bits
 }
 
-// Create AWS Key Pair
+// SSH Key Pair
 resource "aws_key_pair" "key_pair" {
   key_name   = var.instance_keypair
   public_key = tls_private_key.private_key.public_key_openssh
@@ -52,8 +53,8 @@ resource "local_file" "private_key" {
   filename = "${var.instance_keypair}.pem"
 }
 
-// Create AWS Launch Template
-resource "aws_launch_template" "Salary_Launch_Template" {
+// Launch template
+resource "aws_launch_template" "Attendance_Launch_Template" {
   name          = var.template_name
   description   = var.template_description
   image_id      = aws_ami_from_instance.AMI.id
@@ -61,15 +62,15 @@ resource "aws_launch_template" "Salary_Launch_Template" {
   key_name      = aws_key_pair.key_pair.key_name
 
   network_interfaces {
-    security_groups = [aws_security_group.salary_sg.id]
-    subnet_id       = var.subnet_ID
+    security_groups         = [aws_security_group.attendance_sg.id]
+    subnet_id               = var.subnet_ID
   }
 
   user_data = filebase64("./script.sh")
-  
-  tags = {
-    Name = var.template_name
+  tags = {  
+    Name                  = var.template_name
   }
+
 }
 
 // Target groups 
@@ -94,19 +95,10 @@ resource "aws_lb_target_group" "Target_group" {
     Name = var.target_group_name
   }
 }
-# Configure ALB
 
-resource "aws_lb" "Dev_Alb" {
-  name               = var.alb_name
-  internal           = var.internal
-  load_balancer_type = var.load_balancer_type
-  security_groups    = var.security_groups
-  subnets            = var.subnets
-  tags = {
-    Name = var.alb_name
-  }
-}
-// Create listener rule for salary
+// Listener
+
+// Create listener rule for attendance
 
 resource "aws_lb_listener_rule" "path_rule" {
   listener_arn = var.listener_arn
@@ -114,7 +106,7 @@ resource "aws_lb_listener_rule" "path_rule" {
   
   action {
     type             = var.action_type
-    target_group_arn = var.target_group_arn
+    target_group_arn = aws_lb_target_group.Target_group.arn
   }
   
   condition {
@@ -124,14 +116,13 @@ resource "aws_lb_listener_rule" "path_rule" {
   }
 }
 
-*--------------------------------------------------------------------------------------------------------*
-
 // Create Auto Scaling group 
 
-resource "aws_autoscaling_group" "Salary_asg" {
+
+resource "aws_autoscaling_group" "attendance_asg" {
   name                  = var.asg_name
   launch_template {
-    id                  = aws_launch_template.Salary_Launch_Template.id
+    id                  = aws_launch_template.Attendance_Launch_Template.id
   }
   min_size              = var.min_size
   max_size              = var.max_size
@@ -147,12 +138,11 @@ resource "aws_autoscaling_group" "Salary_asg" {
   }
 }
 
-*----------------------------------------------------------------------------------------------------------*
 // ASG Policy 
 
-resource "aws_autoscaling_policy" "Salary_ASG_Policy" {
+resource "aws_autoscaling_policy" "attendance_ASG_Policy" {
   name                        = var.scaling_policy_name
-  autoscaling_group_name      = aws_autoscaling_group.Salary_asg.name
+  autoscaling_group_name      = aws_autoscaling_group.attendance_asg.name
   policy_type                 = var.policy_type
 
   target_tracking_configuration {
@@ -164,3 +154,4 @@ resource "aws_autoscaling_policy" "Salary_ASG_Policy" {
 
   }
 }
+
