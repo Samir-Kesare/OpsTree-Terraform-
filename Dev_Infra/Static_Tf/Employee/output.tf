@@ -27,3 +27,9 @@ output "launch_template_id" {
 output "Target_group_id" {
   value = [aws_lb_target_group.Target_group.id]
 }
+
+#------------------------------- Listener rule of ALB -----------------------------#
+
+output "target_group_arn" {
+  value = [aws_lb_target_group.Target_group.arn]
+}
