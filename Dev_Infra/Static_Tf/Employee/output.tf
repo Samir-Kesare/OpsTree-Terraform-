@@ -33,3 +33,9 @@ output "Target_group_id" {
 output "target_group_arn" {
   value = [aws_lb_target_group.Target_group.arn]
 }
+
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+output "Autoscaling_group_id" {
+  value = [aws_autoscaling_group.Employee_asg.id]
+}
