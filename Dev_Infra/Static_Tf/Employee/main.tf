@@ -100,11 +100,3 @@ resource "aws_lb_target_group" "Target_group" {
   }
 }
 
-# Attach instances to the target group
-
-# resource "aws_lb_target_group_attachment" "Target_group_attachment" {
-#   for_each         = toset(var.instance_ids)
-#   target_group_arn = aws_lb_target_group.Target_group.arn
-#   target_id        = each.value
-#   port             = var.target_group_port
-# }
