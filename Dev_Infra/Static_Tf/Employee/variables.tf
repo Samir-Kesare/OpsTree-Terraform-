@@ -153,10 +153,4 @@ variable "health_check_unhealthy_threshold" {
   default         = 2
 }
 
-# Attach instances to the target group
 
-# variable "instance_ids" {
-#   description     = "List of instance IDs to attach to the target group"
-#   type            = list(string)
-#   default         = [ "i-00009a1a28b092841" ]   # Dev Frontend Instance
-# }
