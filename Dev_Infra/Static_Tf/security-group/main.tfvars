@@ -40,6 +40,7 @@ Sg_tags                 = {
     Enviroment    = "dev"
     Owner         = "Shikha"
   }   
+
 *----------------------------------------------------------------------------------------------------------*
 // Lunch Template
 template_name = "Salary-Launch-Template"
@@ -60,6 +61,10 @@ instance_keypair = "Dev_Key"
 
 target_group_name = "Dev-Salary-TG"
 target_group_port = 8080
+
+*---------------------------------------------------------------------------------------------------------*
+target_group_name = "Dev-Salary-TG"
+target_group_port = 80
 target_group_protocol = "HTTP"
 TG_vpc_id = "vpc-0ebc6865d6c6a5460" // dev vpc id
 health_check_path = "/api/v1/salary/health"
@@ -68,6 +73,7 @@ health_check_interval = 30
 health_check_timeout = 5
 health_check_healthy_threshold = 5
 health_check_unhealthy_threshold = 2
+
 
 *--------------------------------------------------------------------------------------------------------*
 //ALB
@@ -84,3 +90,4 @@ listener_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:listener/app
 path_pattern = "/api/v1/salary/*"
 action_type = "forward"
 target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
+

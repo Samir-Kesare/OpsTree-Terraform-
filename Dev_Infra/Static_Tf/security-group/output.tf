@@ -3,6 +3,7 @@ output "security_group_id" {
   value = aws_security_group.salary_sg.id
 }
 *--------------------------------------------------------------------------------------------------------*
+
 output "launch_template_id" {
   description = "The ID of the created launch template"
   value       = aws_launch_template.Salary_Launch_Template.id
@@ -40,3 +41,8 @@ output "load_balancer_dns_name" {
 output "Autoscaling_group_id" {
   value = [aws_autoscaling_group.Salary_asg.id]
 }
+*-----------------------------------------------------------------------------------------------------------*
+output "Target_group_id" {
+  value = [aws_lb_target_group.Target_group.id]
+}
+
