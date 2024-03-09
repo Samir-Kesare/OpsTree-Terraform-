@@ -40,7 +40,7 @@ variable "ingress_rules" {
       from_port   = 8080 
       to_port     = 8080
       protocol    = "tcp"
-      cidr_blocks = ["sg-09132d5dee9e5e106"] //Dev-Salary-lb-sg ID  
+      cidr_blocks = ["0.0.0.0/0"] //Dev-Salary-lb-sg ID  
     },
     {
       from_port   = 22
@@ -52,7 +52,7 @@ variable "ingress_rules" {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-      cidr_blocks = ["sg-0367a02ed8f7d5565"]  //OpenVPN-SG
+      cidr_blocks = ["0.0.0.0/0"]  //OpenVPN-SG
     }
   ]
 }
@@ -82,7 +82,6 @@ variable "Sg_tags" {
     Owner         = "Shikha"
   }
 }
-*-------------------------------------------------------------------------------------------------*
 
 // launch template
 variable "template_name" {
@@ -142,7 +141,6 @@ variable "instance_keypair" {
   default         = "Dev_Key"  
 }
 
-*-------------------------------------------------------------------------------------------------------*
 
 // Target groups 
 
