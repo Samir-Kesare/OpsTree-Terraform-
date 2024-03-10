@@ -1,4 +1,4 @@
 #!/bin/bash
-cd OT-Salary-API/
+cd Salary-API/
 make run-migrations
 make build
