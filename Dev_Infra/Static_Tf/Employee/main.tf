@@ -102,16 +102,7 @@ resource "aws_lb_target_group" "Target_group" {
 
 #------------------------------- Listener rule of ALB -----------------------------#
 
-resource "aws_lb" "Dev_Alb" {
-  name               = var.alb_name
-  internal           = var.internal
-  load_balancer_type = var.load_balancer_type
-  security_groups    = var.security_groups
-  subnets            = var.subnets
-  tags = {
-    Name = var.alb_name
-  }
-}
+
 // Create listener rule for employee
 
 resource "aws_lb_listener_rule" "path_rule" {
@@ -120,7 +111,7 @@ resource "aws_lb_listener_rule" "path_rule" {
   
   action {
     type             = var.action_type
-    target_group_arn = var.target_group_arn
+    target_group_arn = aws_lb_target_group.Target_group.arn
   }
   
   condition {
