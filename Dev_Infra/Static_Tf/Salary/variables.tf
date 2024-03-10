@@ -1,87 +1,69 @@
 variable "security_group_name" {
-  description = "Name of the security group"
-  default     = "salary-sg"
+  description = "security group name"
+  type            = string
+  default         = "salary-sg"
 }
 
-variable "security_group_description" {
-  description = "Description for the security group"
-  default     = "Security group for Salary application"
+variable "description" {
+  description = "security group for Salary API"
+  type            = string
+  default         = "Security group for Salary-API"
 }
 
 variable "vpc_id" {
-  description = "ID of the VPC"
-  default     = "vpc-0ebc6865d6c6a5460"
+  description = "The ID of the VPC"
+  type = string
+  default = "vpc-00631f1bf6539cb88"
 }
 
-variable "http_port" {
-  description = "Port for HTTP traffic"
-  default     = 8080
-}
-variable "ssh_port" {
-  description = "Port for SSH traffic"
-  default     = 22
-}
-
-variable "ssh_port" {
-  description = "Port for SSH traffic"
-  default     = 22
-}
-
-variable "ingress_rules" {
-  description = "List of ingress rules"
-  type        = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
+variable "inbound_rules" {
+  description = "List of inbound rules for the security group"
+  type = list(map(any))
   default = [
     {
-      from_port   = 8080 
-      to_port     = 8080
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"] //Dev-Salary-lb-sg ID  
+      port     = 22
+      source   = "20.0.0.0/28"   //cidr for management vpc 
+      protocol = "tcp"  
+    },
+   {
+     port     = 22
+     security_group_ids = "sg-045b0ff5f6cfe87fc" // Replace it with OpenVPN-sg
+     protocol = "tcp"  
     },
     {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["20.0.0.0/28"]  //Management VPC Cidr Block
-    },
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]  //OpenVPN-SG
+      port     = 8080
+      security_group_ids   = "sg-0f74269626056367c" // replace it with salary-lb-sg
+      protocol = "tcp"  
     }
   ]
 }
 
-variable "egress_rules" {
-  description = "List of egress rules"
-  type        = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
+variable "outbound_rules" {
+  description = "List of outbound rules for the security group"
+  type = list(object({
+    port     = number
+    source   = string
+    protocol = string
   }))
   default = [
     {
-      from_port   = 0
-      to_port     = 0
-      protocol    = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
+      port     = 0 // allow all ports 
+      source   = "0.0.0.0/0"
+      protocol = "-1"  // all protocols
     }
   ]
 }
-variable "Sg_tags" {
-  type            = map(string)
-  default         = {
-    Name          = "salary-sg"
-    Enviroment    = "dev"
+
+variable "sg_tags" {
+  description = "Tag for Salary sg"
+  type        = map(string)
+  default     = {
+    Name = "Salary-sg"
+    Environment = "Dev"
     Owner         = "Shikha"
   }
 }
+
 
 // launch template
 variable "template_name" {
@@ -105,7 +87,7 @@ variable "instance_type" {
 variable "subnet_ID" {
   description = "The ID of the subnet"
   type        = string
-  default     = "subnet-013843b2702f341f4"
+  default     = "subnet-03e34296260c1c84d"
 }
 
 
@@ -119,7 +101,7 @@ variable "AMI_name" {
 variable "AMI_Instance_ID" {
   description     = " Dev-Salary Instance ID"
   type            = string
-  default         = "i-069d5031c2f20d32b"  # Instance ID of Salary-API
+  default         = "i-05f8654bfaa45cd56"  # Instance ID of Salary-API
 }
 
 // Generate Key
@@ -141,7 +123,6 @@ variable "instance_keypair" {
   default         = "Dev_Key"  
 }
 
-
 // Target groups 
 
 variable "target_group_name" {
@@ -153,7 +134,6 @@ variable "target_group_name" {
 variable "target_group_port" {
   description = "The port on which targets receive traffic"
   type        = number
-  default         = 8080
   default         = 80
 }
 
@@ -166,7 +146,7 @@ variable "target_group_protocol" {
 variable "TG_vpc_id" {
   description = "The VPC ID"
   type        = string
-  default         = "vpc-0ebc6865d6c6a5460" // dev vpc id
+  default         = "vpc-00631f1bf6539cb88" // dev vpc id
 }
 
 variable "health_check_path" {
@@ -224,12 +204,12 @@ variable "load_balancer_type" {
 variable "security_groups" {
   description     = "List of security group IDs for the ALB"
   type            = list(string)
-  default         = ["sg-09132d5dee9e5e106"]  # Salary-lb-sg ID
+  default         = ["sg-019094ebc2fc3ac97"]  # Salary-lb-sg ID
 }
 variable "subnets" {
   description     = "List of subnet IDs for the ALB"
   type            = list(string)
-  default         = ["subnet-0a2270e6f508e903d", "subnet-06a5a25b82ec957cf"]  # Public subnet IDs 
+  default         = ["subnet-03aa497d8af34753b", "subnet-03e34296260c1c84d"]  # Public subnet IDs 
 }
 
 
@@ -238,7 +218,7 @@ variable "subnets" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = "arn:aws:elasticloadbalancing:us-east-1:975050171850:listener/app/ALB/49e9e7b843170b35/85a562da2e108bf6"
+  default = "arn:aws:elasticloadbalancing:us-east-2:975050171850:listener/app/salary-alb/47261e4701ed62b4/7de9e241f1d29732"
 }
 
 variable "path_pattern" {
@@ -256,7 +236,7 @@ variable "action_type" {
 variable "target_group_arn" {
   description = "ARN of the target group"
   type        = string
-  default     = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
+  default     = "arn:aws:elasticloadbalancing:us-east-2:975050171850:targetgroup/salaryapi/9ebffe51875a3570"
 }
 
 // ASG 
@@ -288,7 +268,7 @@ variable "desired_capacity" {
 variable "subnet_ids" {
   description     = "The list of subnet IDs where the instances will be launched"
   type            = list(string)
-  default         = [ "subnet-013843b2702f341f4" ]    #Salary-Pvt-Subnet ID
+  default         = [ "subnet-03e34296260c1c84d" ]    #Salary-Pvt-Subnet ID
 }
 
 variable "tag_key" {
@@ -331,5 +311,3 @@ variable "target_value" {
   type            = number
   default         = 50.0
 }
-
-
