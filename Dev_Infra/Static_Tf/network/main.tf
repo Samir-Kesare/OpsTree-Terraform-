@@ -249,3 +249,26 @@ resource "aws_lb" "dev_alb" {
 
   tags = var.alb_tags
 }
+
+/*--------------- Route 53   ---------------*/
+
+resource "aws_route53_zone" "dev_route53_zone" {
+ name = var.route53_zone_name
+ vpc {
+   vpc_id = aws_vpc.dev_vpc.id
+   vpc_region = var.region
+ }
+ tags = var.route53_zone_tags
+}
+
+resource "aws_route53_record" "dev_route53_record" {
+  zone_id = aws_route53_zone.dev_route53_zone.id
+  name    = "example.com"
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.dev_alb.dns_name
+    zone_id                = aws_lb.dev_alb.zone_id
+    evaluate_target_health = true
+  }
+}

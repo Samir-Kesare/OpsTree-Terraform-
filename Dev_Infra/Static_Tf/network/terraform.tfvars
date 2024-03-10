@@ -340,10 +340,18 @@ alb_sg_tags = {
 /*--------------- ALB ---------------*/
 
  alb_deletion_protection = false
- alb_name = "dev-ns-alb"
+ alb_name = "dev-alb"
+
  elb_type = "application"
  alb_internal = false
  alb_tags = {
     Enviroment = "dev"
     Owner = "harshit"
   }
+  /*--------------- Route 53 ---------------*/
+
+route53_zone_tags = {
+    Enviroment = "dev"
+    Owner = "harshit"
+  }
+route53_zone_name = "example.com"
