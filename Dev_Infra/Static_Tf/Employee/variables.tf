@@ -190,7 +190,7 @@ variable "subnets" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/emp-api/a61683d67e0df893/ef65b9dfea7edce6"
+  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/Dev-ALB/c035d1fec5b1b464/8f597c8812e7fb6d"
 }
 
 variable "path_pattern" {
