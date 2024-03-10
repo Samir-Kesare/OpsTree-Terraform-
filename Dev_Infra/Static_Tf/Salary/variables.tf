@@ -218,7 +218,7 @@ variable "subnets" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = "arn:aws:elasticloadbalancing:us-east-2:975050171850:listener/app/salary-alb/47261e4701ed62b4/7de9e241f1d29732"
+  default = ""
 }
 
 variable "path_pattern" {
