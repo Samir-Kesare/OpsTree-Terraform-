@@ -1,32 +1,32 @@
-// Create AWS security group
-resource "aws_security_group" "salary_sg" {
+
+resource "aws_security_group" "salary-sg" {
   name        = var.security_group_name
-  description = var.security_group_description
+  description = var.description
   vpc_id      = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_rules
+    for_each = var.inbound_rules
     content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
       protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
+      cidr_blocks      = contains(keys(ingress.value), "source") ? [ingress.value.source] : null
+      security_groups  = contains(keys(ingress.value), "security_group_ids") ? [ingress.value.security_group_ids] : null
     }
   }
 
   dynamic "egress" {
-    for_each = var.egress_rules
+    for_each = var.outbound_rules
     content {
-      from_port   = egress.value.from_port
-      to_port     = egress.value.to_port
-      protocol    = egress.value.protocol
-      cidr_blocks = egress.value.cidr_blocks
+      from_port       = egress.value.port
+      to_port         = egress.value.port
+      protocol        = egress.value.protocol
+      cidr_blocks     = [egress.value.source]
     }
   }
-
-  // Tags for the security group
-   tags                  = var.Sg_tags
+  tags = var.sg_tags
 }
+
 
 // Create AWS AMI from Instance
 resource "aws_ami_from_instance" "AMI" {
@@ -61,7 +61,7 @@ resource "aws_launch_template" "Salary_Launch_Template" {
   key_name      = aws_key_pair.key_pair.key_name
 
   network_interfaces {
-    security_groups = [aws_security_group.salary_sg.id]
+    security_groups = [aws_security_group.salary-sg.id]
     subnet_id       = var.subnet_ID
   }
 
@@ -94,6 +94,7 @@ resource "aws_lb_target_group" "Target_group" {
     Name = var.target_group_name
   }
 }
+
 # Configure ALB
 
 resource "aws_lb" "Dev_Alb" {
@@ -145,6 +146,7 @@ resource "aws_autoscaling_group" "Salary_asg" {
   }
 }
 
+
 // ASG Policy 
 
 resource "aws_autoscaling_policy" "Salary_ASG_Policy" {
@@ -161,4 +163,3 @@ resource "aws_autoscaling_policy" "Salary_ASG_Policy" {
 
   }
 }
-
