@@ -190,7 +190,7 @@ variable "subnets" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/Dev-ALB/c035d1fec5b1b464/8f597c8812e7fb6d"
+  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/Dev-ALB/8f76dff48c859255/20e10c3edb27bcd1"
 }
 
 variable "path_pattern" {
@@ -208,7 +208,7 @@ variable "action_type" {
 variable "target_group_arn" {
   description = "ARN of the target group"
   type        = string
-  default     = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:targetgroup/Dev-Employee-TG/efbd475456f84803"
+  default     = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:targetgroup/Dev-TG/4923d113ed6653f1"
 }
 
 #--------------------------Configure Auto Scaling group ---------------------------#
