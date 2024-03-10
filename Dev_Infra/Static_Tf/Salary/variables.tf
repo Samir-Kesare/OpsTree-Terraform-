@@ -218,7 +218,7 @@ variable "subnets" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = ""
+  default = "arn:aws:elasticloadbalancing:us-east-2:533267160240:listener/app/ALB/be4a2629e59585f7/63e7603c1a41fc34"
 }
 
 variable "path_pattern" {
@@ -236,7 +236,7 @@ variable "action_type" {
 variable "target_group_arn" {
   description = "ARN of the target group"
   type        = string
-  default     = "arn:aws:elasticloadbalancing:us-east-2:975050171850:targetgroup/salaryapi/9ebffe51875a3570"
+  default     = "arn:aws:elasticloadbalancing:us-east-2:533267160240:targetgroup/salary-ALB/4c049261c77ea55f"
 }
 
 // ASG 
