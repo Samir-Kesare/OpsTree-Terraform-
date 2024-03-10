@@ -1,72 +1,61 @@
-security_group_name = "dev-security-group"
-security_group_description = "dev security group description"
-vpc_id = "vpc-0ebc6865d6c6a5460"
-http_port = 8080
-ssh_port = 22
-ssh_port = 22
 
-ingress_rules = [
+// Security_Group
+security_group_name = "salary-sg"
+description         = "Security group for Salary API"
+vpc_id              = "vpc-00631f1bf6539cb88"
+
+inbound_rules = [
   {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["sg-09132d5dee9e5e106"] //Dev-Salary-lb-sg ID
+    port     = 22
+    source   = "20.0.0.0/28"   // CIDR for management VPC 
+    protocol = "tcp"  
   },
   {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["20.0.0.0/28"]  //Management VPC Cidr Block
-
+    port     = 22
+    security_group_ids = "sg-045b0ff5f6cfe87fc" // OpenVPN-sg
+    protocol = "tcp"  
   },
   {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["sg-0367a02ed8f7d5565"] //OpenVPN-SG
+    port     = 8080
+    security_group_ids   = "sg-0f74269626056367c" // Salary-lb-sg
+    protocol = "tcp"  
   }
 ]
 
-egress_rules = [
+outbound_rules = [
   {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    port     = 0 // Allow all ports 
+    source   = "0.0.0.0/0"
+    protocol = "-1"  // All protocols
   }
 ]
-Sg_tags                 = {
-    Name          = "salary-sg"
-    Enviroment    = "dev"
-    Owner         = "Shikha"
 
-  }   
-*----------------------------------------------------------------------------------------------------------*
-// Lunch Template
+sg_tags = {
+  Name        = "Salary-sg"
+  Environment = "Dev"
+  Owner       = "Shikha"
+}
+
+// Launch_Template
 template_name = "Salary-Launch-Template"
 template_description = "Launch template for salary api"
 instance_type = "t2.micro"
-subnet_ID = "subnet-013843b2702f341f4"
+subnet_ID = "subnet-03e34296260c1c84d"
 
+//AMI
 AMI_name = "Dev-Salary-AMI"
-AMI_Instance_ID = "i-069d5031c2f20d32b"
+AMI_Instance_ID = "i-05f8654bfaa45cd56"
 
+//Private_key
 private_key_algorithm = "RSA"
 private_key_rsa_bits = 4096
-
 instance_keypair = "Dev_Key"
 
-*----------------------------------------------------------------------------------------------------------*
-// Target Group
-
-target_group_name = "Dev-Salary-TG"
-target_group_port = 8080
-
-*---------------------------------------------------------------------------------------------------------*
+//Target_Group
 target_group_name = "Dev-Salary-TG"
 target_group_port = 80
 target_group_protocol = "HTTP"
-TG_vpc_id = "vpc-0ebc6865d6c6a5460" // dev vpc id
+TG_vpc_id = "vpc-00631f1bf6539cb88" // dev vpc id
 health_check_path = "/api/v1/salary/health"
 health_check_port = "traffic-port"
 health_check_interval = 30
@@ -74,19 +63,32 @@ health_check_timeout = 5
 health_check_healthy_threshold = 5
 health_check_unhealthy_threshold = 2
 
-*--------------------------------------------------------------------------------------------------------*
-//ALB
-
+//Configure ALB
 alb_name = "Dev-ALB"
 internal = false
 load_balancer_type = "application"
-security_groups = ["sg-09132d5dee9e5e106"]  # Salary-lb-sg ID
-subnets = ["subnet-0a2270e6f508e903d", "subnet-06a5a25b82ec957cf"]  # Public subnet IDs
+security_groups = ["sg-019094ebc2fc3ac97"]  # Salary-lb-sg ID
+subnets = ["subnet-03aa497d8af34753b", "subnet-03e34296260c1c84d"]  # Public subnet IDs
 
-*--------------------------------------------------------------------------------------------------------------*
-// Listener Rule
-listener_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:listener/app/ALB/49e9e7b843170b35/85a562da2e108bf6"
+//Create listener
+listener_arn = "arn:aws:elasticloadbalancing:us-east-2:975050171850:listener/app/salary-alb/47261e4701ed62b4/7de9e241f1d29732"
 path_pattern = "/api/v1/salary/*"
 action_type = "forward"
-target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:975050171850:targetgroup/salaryapi/8f778507e433b5f1"
+target_group_arn = "arn:aws:elasticloadbalancing:us-east-2:975050171850:targetgroup/salaryapi/9ebffe51875a3570"
 
+//Configure Auto Scaling group 
+asg_name            = "Dev_Salary_ASG"
+min_size            = 1
+max_size            = 2
+desired_capacity    = 1
+subnet_ids          = [ "subnet-03e34296260c1c84d" ]
+tag_key             = "Name"
+tag_value           = "Dev_Salary_ASG"
+propagate_at_launch = false
+
+
+//Auto Scaling Policies 
+scaling_policy_name     = "target-tracking-policy"
+policy_type             = "TargetTrackingScaling"
+predefined_metric_type  = "ASGAverageCPUUtilization"
+target_value            = 50.0
