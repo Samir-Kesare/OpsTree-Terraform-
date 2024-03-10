@@ -115,7 +115,7 @@ resource "aws_lb_listener_rule" "path_rule" {
   
   action {
     type             = var.action_type
-    target_group_arn = var.target_group_arn
+    target_group_arn = aws_lb_target_group.Target_group.arn
   }
   
   condition {
