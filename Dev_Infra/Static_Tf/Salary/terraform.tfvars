@@ -12,12 +12,12 @@ inbound_rules = [
   },
   {
     port     = 22
-    security_group_ids = "sg-045b0ff5f6cfe87fc" // OpenVPN-sg
+    security_group_ids = "sg-07aeb9cf56a804770" // OpenVPN-sg
     protocol = "tcp"  
   },
   {
     port     = 8080
-    security_group_ids   = "sg-0f74269626056367c" // Salary-lb-sg
+    security_group_ids   = "sg-058b1ce89cc72c92f" // Salary-lb-sg
     protocol = "tcp"  
   }
 ]
@@ -44,7 +44,7 @@ subnet_ID = "subnet-03e34296260c1c84d"
 
 //AMI
 AMI_name = "Dev-Salary-AMI"
-AMI_Instance_ID = "i-05f8654bfaa45cd56"
+AMI_Instance_ID = "ami-0366d71f2e736e21b"
 
 //Private_key
 private_key_algorithm = "RSA"
