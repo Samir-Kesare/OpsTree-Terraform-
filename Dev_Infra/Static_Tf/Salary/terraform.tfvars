@@ -44,7 +44,7 @@ subnet_ID = "subnet-03e34296260c1c84d"
 
 //AMI
 AMI_name = "Dev-Salary-AMI"
-AMI_Instance_ID = "ami-0366d71f2e736e21b"
+AMI_Instance_ID = "i-059e99af9483ecb56"
 
 //Private_key
 private_key_algorithm = "RSA"
