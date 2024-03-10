@@ -34,7 +34,6 @@ resource "aws_security_group" "security_group" {
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
 #--------------------------------Launch Template ----------------------------------#
 
-
 # First Create AMI for Template
 
 resource "aws_ami_from_instance" "AMI" {
@@ -60,21 +59,6 @@ resource "local_file" "private_key" {
   filename = "${var.instance_keypair}.pem"
 }
 
-
-# Cretae Launch Template
-
-resource "null_resource" "configure_template" {
-  # Trigger the provisioner whenever the ALB DNS name changes
-  triggers = {
-    alb_dns_name = aws_lb.Dev_Alb.dns_name
-  }
-
-  # ALB DNS name replaced in script.sh
-  provisioner "local-exec" {
-    command = "sed -i 's/{{ALB_DNS}}/${aws_lb.Dev_Alb.dns_name}/g' ./script.sh"
-  }
-}
-
 resource "aws_launch_template" "Template" {
   name                      = var.template_name
   description               = var.template_description
@@ -85,12 +69,116 @@ resource "aws_launch_template" "Template" {
     security_groups         = [aws_security_group.security_group.id]
     subnet_id               = var.subnet_ID 
   }
-  user_data = filebase64("./script.sh")
+  user_data = base64encode(templatefile("./script.sh", { ALB_DNS = aws_lb.Dev_Alb.dns_name }))
   tags = {  
     Name                  = var.template_name
   }
-  depends_on = [ aws_lb.Dev_Alb, null_resource.configure_template ]
+  depends_on = [ aws_lb.Dev_Alb ]
+}
 
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------------- Target Group -----------------------------------#
+
+resource "aws_lb_target_group" "Target_group" {
+  name        = var.target_group_name
+  port        = var.target_group_port
+  protocol    = var.target_group_protocol
+  vpc_id      = var.TG_vpc_id
+
+  health_check {
+    path                = var.health_check_path
+    protocol            = var.target_group_protocol
+    port                = var.health_check_port
+    interval            = var.health_check_interval
+    timeout             = var.health_check_timeout
+    healthy_threshold   = var.health_check_healthy_threshold
+    unhealthy_threshold = var.health_check_unhealthy_threshold
+  }
+
+  tags = {
+    Name = var.target_group_name
+  }
+}
+
+# Attach instances to the target group
+
+# resource "aws_lb_target_group_attachment" "Target_group_attachment" {
+#   for_each         = toset(var.instance_ids)
+#   target_group_arn = aws_lb_target_group.Target_group.arn
+#   target_id        = each.value
+#   port             = var.target_group_port
+# }
+
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+
+resource "aws_lb" "Dev_Alb" {
+  name               = var.alb_name
+  internal           = var.internal
+  load_balancer_type = var.load_balancer_type
+  security_groups    = var.security_groups
+  subnets            = var.subnets
+  tags = {
+    Name = var.alb_name
+  }
+}
+
+
+# Create listener
+
+resource "aws_lb_listener" "Listener" {
+  load_balancer_arn   = aws_lb.Dev_Alb.arn
+  port                = var.alb_listener_port
+  protocol            = var.alb_listener_protocol
+
+  default_action {
+    type              = var.alb_listener_type
+    target_group_arn  = aws_lb_target_group.Target_group.arn
+  }
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+resource "aws_autoscaling_group" "Frontend_asg" {
+  name                  = var.autoscaling_group_name
+  launch_template {
+    id                  = aws_launch_template.Template.id
+    version             = "$Latest"
+  }
+  min_size              = var.min_size
+  max_size              = var.max_size
+  desired_capacity      = var.desired_capacity
+  vpc_zone_identifier   = var.subnet_ids
+  target_group_arns     = [
+    aws_lb_target_group.Target_group.arn
+  ]
+  tag {
+    key                 = var.tag_key
+    value               = var.tag_value
+    propagate_at_launch = var.propagate_at_launch
+  }
+}
+
+#-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
+#---------------------------- Auto Scaling Policies -------------------------------#
+
+resource "aws_autoscaling_policy" "Dev_ASG_Policy" {
+  name                        = var.scaling_policy_name
+  autoscaling_group_name      = aws_autoscaling_group.Frontend_asg.name
+  policy_type                 = var.policy_type
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = var.predefined_metric_type
+    }
+
+    target_value = var.target_value
+
+  }
 }
 
 #-----------------------xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -----------------------#
