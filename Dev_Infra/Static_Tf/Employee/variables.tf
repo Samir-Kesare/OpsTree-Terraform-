@@ -55,7 +55,7 @@ variable "AMI_name" {
 variable "AMI_Instance_ID" {
   description     = "Give Dev-Employee Instance ID"
   type            = string
-  default         = "i-0143d498a6cbd06a6"  # Dev-employee Instance ID
+  default         = "i-00009a1a28b092841"  # Dev-employee Instance ID
 }
 
 # Key Generate
@@ -98,4 +98,165 @@ variable "subnet_ID" {
   type            = string
   default         = "subnet-029ac81220960564f"  
   
+}
+
+#--------------------------------- Target Group -----------------------------------#
+
+variable "target_group_name" {
+  description     = "Name of the target group"
+  type            = string
+  default         = "Dev-Employee-TG"
+}
+variable "target_group_port" {
+  description     = "Port for the target group"
+  type            = number 
+  default         = 8080
+}
+variable "target_group_protocol" {
+  description     = "Protocol for the target group"
+  type            = string
+  default         = "HTTP"
+}
+variable "TG_vpc_id" {
+  description     = "ID of the VPC"
+  type            = string
+  default         = "vpc-037273df63a16de65"    #  Emp-VPC ID 
+}
+variable "health_check_path" {
+  description     = "The destination for the health check request"
+  type            = string
+  default         = "/health"
+}
+variable "health_check_port" {
+  description     = "The port to use to connect with the target for health checking"
+  type            = string
+  default         = "traffic-port"
+}
+variable "health_check_interval" {
+  description     = "The approximate amount of time, in seconds, between health checks of an individual target"
+  type            = number
+  default         = 30
+}
+variable "health_check_timeout" {
+  description     = "The amount of time, in seconds, during which no response means a failed health check"
+  type            = number
+  default         = 5
+}
+variable "health_check_healthy_threshold" {
+  description     = "The number of consecutive health checks successes required before considering an unhealthy target healthy"
+  type            = number
+  default         = 2
+}
+variable "health_check_unhealthy_threshold" {
+  description     = "The number of consecutive health check failures required before considering a target unhealthy"
+  type            = number
+  default         = 2
+}
+
+
+#------------------------------- Listener rule of ALB -----------------------------#
+
+# Configure ALB
+
+variable "alb_name" {
+  description     = "Name for the Application Load Balancer"
+  type            = string
+  default         = "Dev-ALB"
+}
+variable "internal" {
+  description     = "Boolean flag indicating whether the ALB is internal or external"
+  type            = bool
+  default         = false
+}
+variable "load_balancer_type" {
+  description     = "Type of the load balancer"
+  type            = string
+  default         = "application"
+}
+variable "security_groups" {
+  description     = "List of security group IDs for the ALB"
+  type            = list(string)
+  default         = ["sg-04b7eb5f6320a1aa6"]  # Employee-lb-sg ID
+}
+variable "subnets" {
+  description     = "List of subnet IDs for the ALB"
+  type            = list(string)
+  default         = ["subnet-0abcfc7a31b6687b4", "subnet-00ee15fe21368650e"]  # Public subnet IDs 
+}
+
+
+// Listener rule
+
+variable "listener_arn" {
+  description = "ARN of the existing listener where the rule will be added"
+  type        = string
+  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/emp-api/a61683d67e0df893/ef65b9dfea7edce6"
+}
+
+variable "path_pattern" {
+  description = "Path pattern for the listener rule"
+  type        = string
+  default     = "/api/v1/employee/*"
+}
+
+variable "action_type" {
+  description = "Path pattern for the listener rule"
+  type        = string
+  default     = "forward"
+}
+
+variable "target_group_arn" {
+  description = "ARN of the target group"
+  type        = string
+  default     = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:targetgroup/Dev-Employee-TG/efbd475456f84803"
+}
+
+#--------------------------Configure Auto Scaling group ---------------------------#
+
+variable "autoscaling_group_name" {
+  description     = "The name of the Auto Scaling Group"
+  type            = string
+  default         = "Dev_Employee_ASG"
+}
+
+variable "min_size" {
+  description     = "The minimum number of instances in the ASG"
+  type            = number
+  default         = 1
+}
+
+variable "max_size" {
+  description     = "The maximum number of instances in the ASG"
+  type            = number
+  default         = 2
+}
+
+variable "desired_capacity" {
+  description     = "The desired number of instances in the ASG"
+  type            = number
+  default         = 1
+}
+
+variable "subnet_ids" {
+  description     = "The list of subnet IDs where the instances will be launched"
+  type            = list(string)
+  default         = [ "subnet-029ac81220960564f" ]    #Employee-Pvt-Subnet ID
+}
+
+variable "tag_key" {
+  description     = "The key for the tag to be applied to the ASG and instances"
+  type            = string
+  default         = "Name"
+}
+
+variable "tag_value" {
+  description     = "The value for the tag to be applied to the ASG and instances"
+  type            = string
+  default         = "Dev_Employee_ASG"
+}
+
+variable "propagate_at_launch" {
+  description     = "Whether the tag should be propagated to instances launched by the ASG"
+  type            = bool
+  default         = true
 }
