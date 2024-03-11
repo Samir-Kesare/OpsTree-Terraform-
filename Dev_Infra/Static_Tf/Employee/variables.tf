@@ -55,7 +55,7 @@ variable "AMI_name" {
 variable "AMI_Instance_ID" {
   description     = "Give Dev-Employee Instance ID"
   type            = string
-  default         = "i-00009a1a28b092841"  # Dev-employee Instance ID
+  default         = "i-0e1e08aa641b7ed67"  # Dev-employee Instance ID
 }
 
 # Key Generate
@@ -190,7 +190,7 @@ variable "subnets" {
 variable "listener_arn" {
   description = "ARN of the existing listener where the rule will be added"
   type        = string
-  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/emp-api/a61683d67e0df893/ef65b9dfea7edce6"
+  default = "arn:aws:elasticloadbalancing:ap-southeast-1:441247711986:listener/app/Dev-ALB/c035d1fec5b1b464/8f597c8812e7fb6d"
 }
 
 variable "path_pattern" {
@@ -259,4 +259,27 @@ variable "propagate_at_launch" {
   description     = "Whether the tag should be propagated to instances launched by the ASG"
   type            = bool
   default         = true
+}
+
+#---------------------------- Auto Scaling Policies -------------------------------#
+
+variable "scaling_policy_name" {
+  description     = "The name of the scaling policy"
+  type            = string
+  default         = "target-tracking-policy"
+}
+variable "policy_type" {
+  description     = "The type of adjustment to make"
+  type            = string
+  default         = "TargetTrackingScaling"
+}
+variable "predefined_metric_type" {
+  description     = "The predefined metric type for tracking"
+  type            = string
+  default         = "ASGAverageCPUUtilization"
+}
+variable "target_value" {
+  description     = "The target value for the predefined metric"
+  type            = number
+  default         = 50.0
 }
